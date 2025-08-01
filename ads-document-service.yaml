@@ -1,0 +1,125 @@
+openapi: 3.1.0
+x-stoplight:
+  id: lmk3uxxhv1wok
+info:
+  title: ADS document Services
+  description: 'This is a ADS document service to upload and download documents and images for product related. '
+  version: 1.0.0
+  summary: This service will provide upload and download service
+  contact:
+    name: Vinod Bathula
+    url: ''
+    email: vinod.bathula@se.com
+tags:
+  - name: Upload
+    description: Upload Document
+  - name: Download
+    description: Download Document
+paths:
+  /ads-document/upload:
+    post:
+      summary: Upload a document against ADS ID
+      tags:
+        - Upload
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      parameters:
+        - name: adsId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ADS ID
+        - name: fileName
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Uploading file name with extension
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Invalid request
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-stoplight:
+        id: dnsefvw3nji1j
+    servers:
+      - url: ''
+        description: ''
+  /ads-document/download:
+    get:
+      summary: Download all documents associated with ADS ID
+      tags:
+        - Download
+      parameters:
+        - name: adsId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ADS ID to download documents for
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Invalid request
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-stoplight:
+        id: ny3ft3bsawul7
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      x-stoplight:
+        id: ok4zhsi4m9g2n
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    apiKey_1:
+      name: apiKey
+      type: apiKey
+      in: header
+servers:
+  - url: 'https://api.qa.se.com/v1/ads'
+    description: ''
+  - url: 'https://api.ppr.se.com/v1/ads'
+    description: ''
+  - url: 'https://api.se.com/v1/ads'
+    description: ''

@@ -1,0 +1,526 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 6x5bq4xhrgyci
+info:
+  title: ADS Services
+  description: This is a ADS Service will provide to get ads id's and reload configuration with ads id.
+  version: 1.0.0
+  summary: This Ads service will provide ads services
+  contact:
+    name: Vinod Bathula
+    url: ''
+    email: vinod.bathula@se.com
+tags:
+  - name: configuration
+    description: Configuration related APIS
+  - name: order
+    description: Order related APIS
+paths:
+  /ads-service/listIds:
+    get:
+      tags:
+        - configuration
+      summary: List All ADS Config Ids
+      description: Get All saved ads Ids.
+      operationId: listIds
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Invalid status value
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-stoplight:
+        id: i90g2xqa28pqh
+  /ads-service/hive2/download:
+    get:
+      tags:
+        - order
+      summary: Getting hive by adsId
+      description: Download hive files asssociated with ADS ID as Zip.
+      operationId: downloadHive2
+      parameters:
+        - name: adsId
+          in: query
+          description: Ads Id should be needed to download hive
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Invalid status value
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-stoplight:
+        id: wvl5wcef08m3v
+  /ads-service/orders:
+    get:
+      tags:
+        - order
+      summary: Getting orders by adsId
+      description: 'Get order information like OrderingID,hive2 and productCode asssociated with ADS ID .'
+      operationId: getOrder
+      parameters:
+        - name: adsId
+          in: query
+          description: Ads Id should be needed to get order information
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Invalid status value
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-stoplight:
+        id: dutatmsptxqe7
+  /ads-service/configuration:
+    get:
+      tags:
+        - configuration
+      summary: Getting configuration by adsId
+      description: Get configuration in easy format .
+      operationId: getConfiguration
+      parameters:
+        - name: adsId
+          in: query
+          description: Ads Id should be needed to get configuration
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BomRootDTO'
+        '400':
+          description: Invalid status value
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-stoplight:
+        id: 84n9wlj19yh9q
+  /ads-service/reload:
+    get:
+      tags:
+        - configuration
+      summary: Get reload configuration data by adsId
+      description: Get reload data .
+      operationId: getReload
+      parameters:
+        - name: adsId
+          in: query
+          description: Ads Id should be needed to get reload data
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReloadDataDTO'
+        '400':
+          description: Invalid status value
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-stoplight:
+        id: pc0vkk7lq4qrt
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        adsId:
+          type: string
+        orders:
+          type: array
+          items:
+            type: object
+            properties:
+              orderingID:
+                type: string
+              hive2:
+                type: string
+              productCode:
+                type: string
+              hive2url:
+                type: string
+      x-stoplight:
+        id: vvogrc02l6z26
+    BomDTO:
+      type: object
+      required:
+        - country
+        - products
+      properties:
+        country:
+          type: string
+          pattern: \S
+        documentUrl:
+          type: array
+          items:
+            type: string
+        isCto:
+          type: boolean
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupDTO'
+        locale:
+          type: string
+        products:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ProductDTO'
+        cto:
+          type: boolean
+      x-stoplight:
+        id: fte23t78e0dv8
+    BomRootDTO:
+      type: object
+      required:
+        - data
+        - bom
+      properties:
+        data:
+          $ref: '#/components/schemas/DataDTO'
+        bom:
+          $ref: '#/components/schemas/BomDTO'
+      x-stoplight:
+        id: zafpiqudteaqg
+    CostDTO:
+      type: object
+      properties:
+        costDate:
+          type: string
+        currency:
+          type: string
+        overwriteCost:
+          type: boolean
+        source:
+          type: string
+        sourceValue:
+          type: string
+        value:
+          type: integer
+          format: int32
+      x-stoplight:
+        id: 18ahmh0lwcs38
+    CustomizationDTO:
+      type: object
+      properties:
+        configuredReference:
+          type: string
+        custom-configuredReference1:
+          type: string
+        custom-configuredReference2:
+          type: string
+      x-stoplight:
+        id: qtelwtu90k3mm
+    DataDTO:
+      type: object
+      required:
+        - source
+      properties:
+        event:
+          type: string
+        filters:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+        lastModifiedAt:
+          type: string
+        source:
+          type: string
+          pattern: \S
+        subSource:
+          type: string
+        username:
+          type: string
+        appId:
+          type: string
+      x-stoplight:
+        id: q7gdf9l0ag92f
+    ErrorDetails:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+      x-stoplight:
+        id: v1ee3274d55b4
+    GroupDTO:
+      type: object
+      properties:
+        groupName:
+          type: string
+        id:
+          type: string
+        parentGroupId:
+          type: string
+        qty:
+          type: integer
+          format: int32
+      x-stoplight:
+        id: nq22hqugjdq1v
+    OrderingDataDTO:
+      type: object
+      properties:
+        orderingId:
+          type: string
+        hive2:
+          type: string
+        hive2Url:
+          type: string
+        productCode:
+          type: string
+        edi:
+          type: string
+      x-stoplight:
+        id: 4n1gc4z8p6zxc
+    PriceDTO:
+      type: object
+      properties:
+        currency:
+          type: string
+        overwritePrice:
+          type: boolean
+        value:
+          type: integer
+          format: int32
+        priceDate:
+          type: string
+        source:
+          type: string
+        sourceValue:
+          type: string
+      x-stoplight:
+        id: fceh6qq3riz7n
+    ProductDTO:
+      type: object
+      required:
+        - applicationSource
+      properties:
+        adsConfigId:
+          type: string
+        applicationSource:
+          type: string
+          pattern: \S
+        name:
+          type: string
+        cost:
+          $ref: '#/components/schemas/CostDTO'
+        customization:
+          $ref: '#/components/schemas/CustomizationDTO'
+        description:
+          type: string
+        freeText:
+          type: string
+        freezeItem:
+          type: boolean
+        groupId:
+          type: string
+        isParent:
+          type: boolean
+        orderingData:
+          $ref: '#/components/schemas/OrderingDataDTO'
+        partType:
+          type: string
+        bomLineItemNo:
+          type: string
+        price:
+          $ref: '#/components/schemas/PriceDTO'
+        productId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        reloadData:
+          $ref: '#/components/schemas/ReloadDataDTO'
+        selector:
+          $ref: '#/components/schemas/SelectorDTO'
+        subparts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubpartDTO'
+        parent:
+          type: boolean
+      x-stoplight:
+        id: 8yfz1m0u4x0i6
+    ReloadDataDTO:
+      type: object
+      properties:
+        reloadSolution:
+          $ref: '#/components/schemas/JsonNode'
+        reloadConfiguration:
+          type: boolean
+        reloadConfigurationId:
+          type: string
+      x-stoplight:
+        id: p1j4c4ftwyau6
+    SelectorDTO:
+      type: object
+      properties:
+        technology:
+          type: string
+        dataId:
+          type: string
+        project:
+          type: string
+        country:
+          type: string
+        language:
+          type: string
+      x-stoplight:
+        id: ao2s2zxib4ood
+    SubpartDTO:
+      type: object
+      properties:
+        cost:
+          $ref: '#/components/schemas/CostDTO'
+        description:
+          type: string
+        price:
+          $ref: '#/components/schemas/PriceDTO'
+        productId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+      x-stoplight:
+        id: 23dn9hj4e22wx
+    JsonNode:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        valueNode:
+          type: boolean
+        containerNode:
+          type: boolean
+        missingNode:
+          type: boolean
+        array:
+          type: boolean
+        object:
+          type: boolean
+        nodeType:
+          $ref: '#/components/schemas/JsonNodeType'
+        pojo:
+          type: boolean
+        number:
+          type: boolean
+        integralNumber:
+          type: boolean
+        floatingPointNumber:
+          type: boolean
+        short:
+          type: boolean
+        int:
+          type: boolean
+        long:
+          type: boolean
+        float:
+          type: boolean
+        double:
+          type: boolean
+        bigDecimal:
+          type: boolean
+        bigInteger:
+          type: boolean
+        textual:
+          type: boolean
+        boolean:
+          type: boolean
+        'null':
+          type: boolean
+        binary:
+          type: boolean
+      x-stoplight:
+        id: llzlr148c2426
+    JsonNodeType:
+      type: string
+      enum:
+        - ARRAY
+        - BINARY
+        - BOOLEAN
+        - MISSING
+        - 'NULL'
+        - NUMBER
+        - OBJECT
+        - POJO
+        - STRING
+      x-stoplight:
+        id: me1ong4w3saz4
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+          example: 10
+        message:
+          type: string
+      x-stoplight:
+        id: vdxqwukrkgml0
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+    apiKey_1:
+      name: apiKey
+      type: apiKey
+      in: header
+servers:
+  - url: 'https://api.qa.se.com/v1/ads'
+    description: ''
