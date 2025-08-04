@@ -118,8 +118,8 @@ components:
       in: header
 servers:
   - url: 'https://api.qa.se.com/v1/ads'
-    description: ''
+    description: QA
   - url: 'https://api.ppr.se.com/v1/ads'
-    description: ''
+    description: PPR
   - url: 'https://api.se.com/v1/ads'
-    description: ''
+    description: PROD

@@ -1,0 +1,122 @@
+openapi: 3.0.0
+x-stoplight:
+  id: w4s41nz0ct0uo
+info:
+  title: ADS wrapper service
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /save:
+    parameters:
+      - schema:
+          type: string
+        in: header
+        name: X-REQUEST-APPID
+        description: Configurator Id
+    servers:
+      - url: 'https://api.qa.se.com/v1/ads'
+        description: ''
+      - url: 'https://api.ppr.se.com/v1/ads'
+        description: ''
+      - url: 'https://api.se.com/v1/ads'
+        description: ''
+    post:
+      summary: Your POST endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    status: 0
+                    body:
+                      adsId: string
+                      configIds:
+                        - adsConfigId: string
+                          configurator: string
+                    error:
+                      message: string
+                      code: string
+      operationId: post-save
+      x-stoplight:
+        id: 7n5hgx7hubdew
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: X-REQUEST-APPID
+          description: Configurator Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+        description: "{\r\n  \"data\": {\r\n    \"event\": \"string\",\r\n    \"filters\": [\r\n      \"string\"\r\n    ],\r\n    \"id\": \"string\",\r\n    \"lastModifiedAt\": \"string\",\r\n    \"source\": \"Z\",\r\n    \"subSource\": \"string\",\r\n    \"username\": \"string\",\r\n    \"widgetName\": \"string\",\r\n    \"localConfigId\": \"string\"\r\n  },\r\n  \"bom\": {\r\n    \"adsId\": \"string\",\r\n    \"country\": \"u\",\r\n    \"documentUrl\": [\r\n      \"string\"\r\n    ],\r\n    \"groups\": [\r\n      {\r\n        \"groupName\": \"string\",\r\n        \"id\": \"string\",\r\n        \"parentGroupId\": \"string\",\r\n        \"qty\": 0\r\n      }\r\n    ],\r\n    \"locale\": \"$\",\r\n    \"products\": [\r\n      {\r\n        \"adsConfigId\": \"string\",\r\n        \"applicationSource\": \")\",\r\n        \"name\": \"string\",\r\n        \"cost\": {\r\n          \"costDate\": \"string\",\r\n          \"currency\": \"string\",\r\n          \"overwriteCost\": true,\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\",\r\n          \"value\": 0\r\n        },\r\n        \"customization\": {\r\n          \"configuredReference\": \"string\",\r\n          \"custom-configuredReference1\": \"string\",\r\n          \"custom-configuredReference2\": \"string\"\r\n        },\r\n        \"description\": \"string\",\r\n        \"freeText\": \"string\",\r\n        \"freezeItem\": true,\r\n        \"groupId\": \"string\",\r\n        \"isParent\": true,\r\n        \"orderingData\": {\r\n          \"orderingId\": \"string\",\r\n          \"hive2\": \"string\",\r\n          \"hive2Url\": \"string\",\r\n          \"productCode\": \"string\",\r\n          \"edi\": \"string\"\r\n        },\r\n        \"partType\": \"string\",\r\n        \"bomLineItemNo\": \"string\",\r\n        \"price\": {\r\n          \"currency\": \"string\",\r\n          \"overwritePrice\": true,\r\n          \"value\": 0,\r\n          \"priceDate\": \"string\",\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\"\r\n        },\r\n        \"productId\": \"string\",\r\n        \"quantity\": 0,\r\n        \"reloadData\": {\r\n          \"reloadSolution\": {\r\n            \"empty\": true,\r\n            \"valueNode\": true,\r\n            \"containerNode\": true,\r\n            \"missingNode\": true,\r\n            \"array\": true,\r\n            \"object\": true,\r\n            \"nodeType\": \"ARRAY\",\r\n            \"pojo\": true,\r\n            \"number\": true,\r\n            \"integralNumber\": true,\r\n            \"floatingPointNumber\": true,\r\n            \"short\": true,\r\n            \"int\": true,\r\n            \"long\": true,\r\n            \"float\": true,\r\n            \"double\": true,\r\n            \"bigDecimal\": true,\r\n            \"bigInteger\": true,\r\n            \"textual\": true,\r\n            \"boolean\": true,\r\n            \"null\": true,\r\n            \"binary\": true\r\n          },\r\n          \"reloadConfiguration\": true,\r\n          \"reloadConfigurationId\": \"string\"\r\n        },\r\n        \"selector\": {\r\n          \"technology\": \"string\",\r\n          \"dataId\": \"string\",\r\n          \"project\": \"string\",\r\n          \"country\": \"string\",\r\n          \"language\": \"string\"\r\n        },\r\n        \"subparts\": [\r\n          {\r\n            \"cost\": {\r\n              \"costDate\": \"string\",\r\n              \"currency\": \"string\",\r\n              \"overwriteCost\": true,\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\",\r\n              \"value\": 0\r\n            },\r\n            \"description\": \"string\",\r\n            \"price\": {\r\n              \"currency\": \"string\",\r\n              \"overwritePrice\": true,\r\n              \"value\": 0,\r\n              \"priceDate\": \"string\",\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\"\r\n            },\r\n            \"productId\": \"string\",\r\n            \"quantity\": 0\r\n          }\r\n        ],\r\n        \"parent\": true\r\n      }\r\n    ]\r\n  }\r\n}"
+      description: To save configuratio
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: ''
+      x-examples:
+        Alice Smith:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+          x-stoplight:
+            id: 3fc0xw8blubpt
+        firstName:
+          type: string
+          x-stoplight:
+            id: z05v6e3tmdo2g
+        lastName:
+          type: string
+          x-stoplight:
+            id: yfxdboc0wsqkg
+        email:
+          type: string
+          format: email
+          x-stoplight:
+            id: ov06csh17o3d9
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1997-10-31'
+          x-stoplight:
+            id: twhetsrunjt1b
+        emailVerified:
+          type: boolean
+          description: Set to true if the user's email has been verified.
+          x-stoplight:
+            id: jan7fryfsvwlk
+        createDate:
+          type: string
+          format: date
+          description: The date that the user was created.
+          x-stoplight:
+            id: ry6po4ogbl7vx
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - emailVerified
+      x-stoplight:
+        id: 19upkx1867h9e
