@@ -8,10 +8,11 @@ info:
   contact:
     name: vinod Bathula
     email: vinodbathula@se.com
-tags:
-  - name Save
 servers:
   - url: 'http://localhost:3000'
+tags:
+  - name: Save
+    description: Save ADS
 paths:
   /save:
     parameters:
@@ -29,6 +30,8 @@ paths:
         description: ''
     post:
       summary: Your POST endpoint
+      tags:
+        - Save
       responses:
         '200':
           description: OK
