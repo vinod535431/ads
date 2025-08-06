@@ -19,6 +19,8 @@ paths:
   /ads-document/upload:
     post:
       summary: Upload a document against ADS ID
+      description: This is api to upload document
+      operationId: uploadDocument
       tags:
         - Upload
       requestBody:
@@ -66,6 +68,8 @@ paths:
   /ads-document/download:
     get:
       summary: Download all documents associated with ADS ID
+      description: Downaload document
+      operationId: downloadDocument
       tags:
         - Download
       parameters:
