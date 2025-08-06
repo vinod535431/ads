@@ -286,15 +286,6 @@ components:
           type: string
       x-stoplight:
         id: q7gdf9l0ag92f
-    ErrorDetails:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-      x-stoplight:
-        id: v1ee3274d55b4
     GroupDTO:
       type: object
       properties:
