@@ -8,7 +8,7 @@ info:
   summary: This service will provide upload and download service
   contact:
     name: Vinod Bathula
-    url: ''
+    url: 'https//:www.se.com'
     email: vinod.bathula@se.com
 tags:
   - name: Upload
@@ -116,14 +116,6 @@ components:
           tokenUrl: ''
           refreshUrl: ''
           scopes: {}
-    apiKey_1:
-      name: apiKey
-      type: apiKey
-      in: header
 servers:
   - url: 'https://api.qa.se.com/v1/ads'
     description: QA
-  - url: 'https://api.ppr.se.com/v1/ads'
-    description: PPR
-  - url: 'https://api.se.com/v1/ads'
-    description: PROD

@@ -8,8 +8,10 @@ info:
   contact:
     name: vinod Bathula
     email: vinodbathula@se.com
+    url: 'https//:www.se.com'
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'https://api.qa.se.com/v1/ads'
+    description: qa
 tags:
   - name: Save
     description: Save ADS
@@ -69,3 +71,12 @@ paths:
               properties: {}
         description: "{\r\n  \"data\": {\r\n    \"event\": \"string\",\r\n    \"filters\": [\r\n      \"string\"\r\n    ],\r\n    \"id\": \"string\",\r\n    \"lastModifiedAt\": \"string\",\r\n    \"source\": \"Z\",\r\n    \"subSource\": \"string\",\r\n    \"username\": \"string\",\r\n    \"widgetName\": \"string\",\r\n    \"localConfigId\": \"string\"\r\n  },\r\n  \"bom\": {\r\n    \"adsId\": \"string\",\r\n    \"country\": \"u\",\r\n    \"documentUrl\": [\r\n      \"string\"\r\n    ],\r\n    \"groups\": [\r\n      {\r\n        \"groupName\": \"string\",\r\n        \"id\": \"string\",\r\n        \"parentGroupId\": \"string\",\r\n        \"qty\": 0\r\n      }\r\n    ],\r\n    \"locale\": \"$\",\r\n    \"products\": [\r\n      {\r\n        \"adsConfigId\": \"string\",\r\n        \"applicationSource\": \")\",\r\n        \"name\": \"string\",\r\n        \"cost\": {\r\n          \"costDate\": \"string\",\r\n          \"currency\": \"string\",\r\n          \"overwriteCost\": true,\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\",\r\n          \"value\": 0\r\n        },\r\n        \"customization\": {\r\n          \"configuredReference\": \"string\",\r\n          \"custom-configuredReference1\": \"string\",\r\n          \"custom-configuredReference2\": \"string\"\r\n        },\r\n        \"description\": \"string\",\r\n        \"freeText\": \"string\",\r\n        \"freezeItem\": true,\r\n        \"groupId\": \"string\",\r\n        \"isParent\": true,\r\n        \"orderingData\": {\r\n          \"orderingId\": \"string\",\r\n          \"hive2\": \"string\",\r\n          \"hive2Url\": \"string\",\r\n          \"productCode\": \"string\",\r\n          \"edi\": \"string\"\r\n        },\r\n        \"partType\": \"string\",\r\n        \"bomLineItemNo\": \"string\",\r\n        \"price\": {\r\n          \"currency\": \"string\",\r\n          \"overwritePrice\": true,\r\n          \"value\": 0,\r\n          \"priceDate\": \"string\",\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\"\r\n        },\r\n        \"productId\": \"string\",\r\n        \"quantity\": 0,\r\n        \"reloadData\": {\r\n          \"reloadSolution\": {\r\n            \"empty\": true,\r\n            \"valueNode\": true,\r\n            \"containerNode\": true,\r\n            \"missingNode\": true,\r\n            \"array\": true,\r\n            \"object\": true,\r\n            \"nodeType\": \"ARRAY\",\r\n            \"pojo\": true,\r\n            \"number\": true,\r\n            \"integralNumber\": true,\r\n            \"floatingPointNumber\": true,\r\n            \"short\": true,\r\n            \"int\": true,\r\n            \"long\": true,\r\n            \"float\": true,\r\n            \"double\": true,\r\n            \"bigDecimal\": true,\r\n            \"bigInteger\": true,\r\n            \"textual\": true,\r\n            \"boolean\": true,\r\n            \"null\": true,\r\n            \"binary\": true\r\n          },\r\n          \"reloadConfiguration\": true,\r\n          \"reloadConfigurationId\": \"string\"\r\n        },\r\n        \"selector\": {\r\n          \"technology\": \"string\",\r\n          \"dataId\": \"string\",\r\n          \"project\": \"string\",\r\n          \"country\": \"string\",\r\n          \"language\": \"string\"\r\n        },\r\n        \"subparts\": [\r\n          {\r\n            \"cost\": {\r\n              \"costDate\": \"string\",\r\n              \"currency\": \"string\",\r\n              \"overwriteCost\": true,\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\",\r\n              \"value\": 0\r\n            },\r\n            \"description\": \"string\",\r\n            \"price\": {\r\n              \"currency\": \"string\",\r\n              \"overwritePrice\": true,\r\n              \"value\": 0,\r\n              \"priceDate\": \"string\",\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\"\r\n            },\r\n            \"productId\": \"string\",\r\n            \"quantity\": 0\r\n          }\r\n        ],\r\n        \"parent\": true\r\n      }\r\n    ]\r\n  }\r\n}"
       description: To save configuratio
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}

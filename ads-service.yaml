@@ -3,77 +3,20 @@ x-stoplight:
   id: 6x5bq4xhrgyci
 info:
   title: ADS Services
-  description: This is a ADS Service will provide to get ads id's and reload configuration with ads id.
+  description: "This API is to provide all get Services from ADS. \r\nIt will provide to get orders by ads id's,\r\ngetting configurations by adsid and reload configuration by ads id.\r\nadsid is required to use all these services. \r\n"
   version: 1.0.0
   summary: This Ads service will provide ads services
   contact:
     name: Vinod Bathula
-    url: ''
+    url: 'https//:www.se.com'
     email: vinod.bathula@se.com
+  termsOfService: ''
 tags:
   - name: configuration
     description: Configuration related APIS
   - name: order
     description: Order related APIS
 paths:
-  /ads-service/listIds:
-    get:
-      tags:
-        - configuration
-      summary: List All ADS Config Ids
-      description: Get All saved ads Ids.
-      operationId: listIds
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-        '400':
-          description: Invalid status value
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      x-stoplight:
-        id: i90g2xqa28pqh
-  /ads-service/hive2/download:
-    get:
-      tags:
-        - order
-      summary: Getting hive by adsId
-      description: Download hive files asssociated with ADS ID as Zip.
-      operationId: downloadHive2
-      parameters:
-        - name: adsId
-          in: query
-          description: Ads Id should be needed to download hive
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/zip:
-              schema:
-                type: string
-                format: binary
-        '400':
-          description: Invalid status value
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-      x-stoplight:
-        id: wvl5wcef08m3v
   /ads-service/orders:
     get:
       tags:
@@ -508,14 +451,6 @@ components:
           tokenUrl: ''
           refreshUrl: ''
           scopes: {}
-    apiKey_1:
-      name: apiKey
-      type: apiKey
-      in: header
 servers:
   - url: 'https://api.qa.se.com/v1/ads'
     description: QA
-  - url: 'https://api.ppr.se.com/v1/ads'
-    description: ppr
-  - url: 'https://api.se.com/v1/ads'
-    description: production
