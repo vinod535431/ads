@@ -1,0 +1,358 @@
+---
+openapi: 3.1.0
+components:
+  schemas:
+    AdsResponseBomRootDTO:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        body:
+          $ref: "#/components/schemas/BomRootDTO"
+        error:
+          $ref: "#/components/schemas/ErrorDetails"
+    AdsResponseString:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        body:
+          type: string
+        error:
+          $ref: "#/components/schemas/ErrorDetails"
+    BomDTO:
+      type: object
+      required:
+      - country
+      - locale
+      - products
+      properties:
+        adsId:
+          type: string
+        country:
+          type: string
+          pattern: \S
+        documentUrl:
+          type: array
+          items:
+            type: string
+        groups:
+          type: array
+          items:
+            $ref: "#/components/schemas/GroupDTO"
+        locale:
+          type: string
+          pattern: \S
+        products:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/ProductDTO"
+        reloadData:
+          $ref: "#/components/schemas/ReloadDataDTO"
+    BomRootDTO:
+      type: object
+      required:
+      - data
+      - bom
+      properties:
+        data:
+          $ref: "#/components/schemas/DataDTO"
+        bom:
+          $ref: "#/components/schemas/BomDTO"
+    CostDTO:
+      type: object
+      properties:
+        costDate:
+          type: string
+        currency:
+          type: string
+        overwriteCost:
+          type: boolean
+        source:
+          type: string
+        sourceValue:
+          type: string
+        value:
+          type: integer
+          format: int32
+    CustomizationDTO:
+      type: object
+      properties:
+        configuredReference:
+          type: string
+        custom-configuredReference1:
+          type: string
+        custom-configuredReference2:
+          type: string
+    DataDTO:
+      type: object
+      required:
+      - source
+      properties:
+        event:
+          type: string
+        filters:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+        lastModifiedAt:
+          type: string
+        source:
+          type: string
+          pattern: \S
+        subSource:
+          type: string
+        username:
+          type: string
+        widgetName:
+          type: string
+        localConfigId:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    GroupDTO:
+      type: object
+      properties:
+        groupName:
+          type: string
+        id:
+          type: string
+        parentGroupId:
+          type: string
+        qty:
+          type: integer
+          format: int32
+    JsonNode:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        valueNode:
+          type: boolean
+        containerNode:
+          type: boolean
+        missingNode:
+          type: boolean
+        array:
+          type: boolean
+        object:
+          type: boolean
+        nodeType:
+          $ref: "#/components/schemas/JsonNodeType"
+        pojo:
+          type: boolean
+        number:
+          type: boolean
+        integralNumber:
+          type: boolean
+        floatingPointNumber:
+          type: boolean
+        short:
+          type: boolean
+        int:
+          type: boolean
+        long:
+          type: boolean
+        float:
+          type: boolean
+        double:
+          type: boolean
+        bigDecimal:
+          type: boolean
+        bigInteger:
+          type: boolean
+        textual:
+          type: boolean
+        boolean:
+          type: boolean
+        "null":
+          type: boolean
+        binary:
+          type: boolean
+    JsonNodeType:
+      type: string
+      enum:
+      - ARRAY
+      - BINARY
+      - BOOLEAN
+      - MISSING
+      - "NULL"
+      - NUMBER
+      - OBJECT
+      - POJO
+      - STRING
+    OrderingDataDTO:
+      type: object
+      properties:
+        orderingId:
+          type: string
+        hive2:
+          type: string
+        hive2Url:
+          type: string
+        productCode:
+          type: string
+        edi:
+          type: string
+    PriceDTO:
+      type: object
+      properties:
+        currency:
+          type: string
+        overwritePrice:
+          type: boolean
+        value:
+          type: integer
+          format: int32
+        priceDate:
+          type: string
+        source:
+          type: string
+        sourceValue:
+          type: string
+    ProductDTO:
+      type: object
+      required:
+      - applicationSource
+      - partType
+      - productId
+      - quantity
+      properties:
+        configId:
+          type: string
+        applicationSource:
+          type: string
+          pattern: \S
+        name:
+          type: string
+        cost:
+          $ref: "#/components/schemas/CostDTO"
+        customization:
+          $ref: "#/components/schemas/CustomizationDTO"
+        description:
+          type: string
+        freeText:
+          type: string
+        freezeItem:
+          type: boolean
+        groupId:
+          type: string
+        isParent:
+          type: boolean
+        orderingData:
+          $ref: "#/components/schemas/OrderingDataDTO"
+        partType:
+          type: string
+          pattern: \S
+        bomLineItemNo:
+          type: string
+        price:
+          $ref: "#/components/schemas/PriceDTO"
+        productId:
+          type: string
+          pattern: \S
+        quantity:
+          type: integer
+          format: int32
+        reloadData:
+          $ref: "#/components/schemas/ReloadDataDTO"
+        selector:
+          $ref: "#/components/schemas/SelectorDTO"
+        subparts:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubpartDTO"
+        parent:
+          type: boolean
+    ReloadDataDTO:
+      type: object
+      properties:
+        reloadSolution:
+          $ref: "#/components/schemas/JsonNode"
+        reloadConfiguration:
+          type: boolean
+    SelectorDTO:
+      type: object
+      properties:
+        technology:
+          type: string
+        dataId:
+          type: string
+        project:
+          type: string
+        country:
+          type: string
+        language:
+          type: string
+    SubpartDTO:
+      type: object
+      properties:
+        cost:
+          $ref: "#/components/schemas/CostDTO"
+        description:
+          type: string
+        price:
+          $ref: "#/components/schemas/PriceDTO"
+        productId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+paths:
+  /ads-idgen/generate/onEasy/{appId}:
+    post:
+      parameters:
+      - name: appId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BomRootDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdsResponseBomRootDTO"
+        "400":
+          description: Bad Request
+      summary: Generate Ads And Config Id
+      tags:
+      - Id Generate Controller
+  /ads-idgen/generate/{appId}:
+    get:
+      parameters:
+      - name: appId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdsResponseString"
+      summary: Generate Ads Id
+      tags:
+      - Id Generate Controller
+info:
+  title: ADS Id Generation
+  version: 1.0.0-SNAPSHOT
