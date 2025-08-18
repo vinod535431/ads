@@ -2,7 +2,7 @@ openapi: 3.1.0
 x-stoplight:
   id: 6x5bq4xhrgyci
 info:
-  title: ADS Services
+  title: Save Configurator Services
   description: "This API is to provide all get Services from ADS. \r\nIt will provide to get orders by ads id's,\r\ngetting configurations by adsid and reload configuration by ads id.\r\nadsid is required to use all these services. \r\n"
   version: 1.0.0
   summary: This Ads service will provide ads services
@@ -17,29 +17,30 @@ tags:
   - name: order
     description: Order related APIS
 paths:
-  /ads-service/orders:
+  /offer-design/authoritative-data/orders:
+    parameters: []
     get:
       tags:
         - order
       summary: Getting orders by adsId
-      description: 'Get order information like OrderingID,hive2 and productCode asssociated with ADS ID .'
+      description: 'Get order information like OrderingID, hive2, and productCode associated with ADS ID.'
       operationId: getOrder
       parameters:
         - name: adsId
           in: query
-          description: Ads Id should be needed to get order information
+          description: ADS ID required to fetch order information
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Order'
         '400':
-          description: Invalid status value
+          description: Invalid ADS ID
         default:
           description: Unexpected error
           content:
@@ -48,7 +49,7 @@ paths:
                 $ref: '#/components/schemas/Error'
       x-stoplight:
         id: dutatmsptxqe7
-  /ads-service/configuration:
+  /offer-design/authoritative-data/configuration:
     get:
       tags:
         - configuration
@@ -79,7 +80,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       x-stoplight:
         id: 84n9wlj19yh9q
-  /ads-service/reload:
+    parameters: []
+  /offer-design/authoritative-data/reload:
     get:
       tags:
         - configuration
@@ -110,6 +112,7 @@ paths:
                 $ref: '#/components/schemas/Error'
       x-stoplight:
         id: pc0vkk7lq4qrt
+    parameters: []
 components:
   schemas:
     Order:

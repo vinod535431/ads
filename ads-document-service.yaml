@@ -2,8 +2,8 @@ openapi: 3.1.0
 x-stoplight:
   id: lmk3uxxhv1wok
 info:
-  title: ADS document Services
-  description: 'This is a ADS document service to upload and download documents and images for product related. '
+  title: Save Configurator Document Services
+  description: "1. Document & Image Upload\r\n\r\nAllows business and offer teams to upload a wide range of documents and images.\r\nSupported file types include PDFs, Word documents, Excel sheets, and common image formats (JPEG, PNG, etc.).\r\nMetadata tagging for easy categorization (e.g., product ID, document type, version).\r\n\r\n2. Product Association\r\n\r\nEach uploaded asset is linked to a specific product or product variant.\r\nEnables quick lookup and filtering based on product identifiers.\r\n\r\n3. Secure Download Access\r\n\r\nFactory teams and end users can securely download relevant documents.\r\nAccess control ensures only authorized users can view or retrieve sensitive files.\r\n\r\n4. Support for Manufacturing & Documentation\r\n\r\nProvides easy access to critical documentation such as:\r\nOperation manuals\r\nCommissioning guides\r\nInstallation instructions\r\nTechnical specifications\r\nEnhances efficiency in manufacturing, assembly, and quality assurance processes."
   version: 1.0.0
   summary: This service will provide upload and download service
   contact:
@@ -16,7 +16,7 @@ tags:
   - name: Download
     description: Download Document
 paths:
-  /ads-document/upload:
+  /offer-design/authoritative-data/document/upload:
     post:
       summary: Upload a document against ADS ID
       description: This is api to upload document
@@ -62,10 +62,9 @@ paths:
                 $ref: '#/components/schemas/Error'
       x-stoplight:
         id: dnsefvw3nji1j
-    servers:
-      - url: ''
-        description: ''
-  /ads-document/download:
+    servers: []
+    parameters: []
+  /offer-design/authoritative-data/document/download:
     get:
       summary: Download all documents associated with ADS ID
       description: Downaload document
@@ -97,6 +96,7 @@ paths:
                 $ref: '#/components/schemas/Error'
       x-stoplight:
         id: ny3ft3bsawul7
+    parameters: []
 components:
   schemas:
     Error:
@@ -117,5 +117,5 @@ components:
           refreshUrl: ''
           scopes: {}
 servers:
-  - url: 'https://api.qa.se.com/v1/ads'
+  - url: 'https://api.qa.se.com/v1/offer-design/document-service'
     description: QA

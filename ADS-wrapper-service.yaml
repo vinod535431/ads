@@ -2,9 +2,9 @@ openapi: 3.0.0
 x-stoplight:
   id: w4s41nz0ct0uo
 info:
-  title: ADS wrapper service
+  title: Save Configurator Wrapper Service
   version: '1.0'
-  description: This will support saving ADS configuration
+  description: "The ADS Configuration API serves as the primary entry point to the Asset Document Service (ADS) portal for saving product-related configuration data. \r\nThis microservice is designed to integrate with internal systems and orchestrate the storage and indexing of configuration files using a robust, event-driven architecture."
   contact:
     name: vinod Bathula
     email: vinodbathula@se.com
@@ -16,7 +16,7 @@ tags:
   - name: Save
     description: Save ADS
 paths:
-  /save:
+  /offer-design/authoritative-data/configuration/save:
     parameters:
       - schema:
           type: string
@@ -25,10 +25,6 @@ paths:
         description: Configurator Id
     servers:
       - url: 'https://api.qa.se.com/v1/ads'
-        description: ''
-      - url: 'https://api.ppr.se.com/v1/ads'
-        description: ''
-      - url: 'https://api.se.com/v1/ads'
         description: ''
     post:
       summary: Your POST endpoint
