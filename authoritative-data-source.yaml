@@ -2,7 +2,7 @@ openapi: 3.0.3
 x-stoplight:
   id: ghswp4ggeiev6
 info:
-  title: Authoritative Data Source (ADS)
+  title: Authoritative Data
   version: 1.0.0
   description: "ADS is a data hub that consolidates configuration details from multiple configurators into a unified format for FO/BO applications, anchored by a unique ConfigID.\r\nIts architecture uses a common database/services layer compatible with legacy configurators, and APIs to generate ConfigIDs, fetch detailed configuration/BOM L1/Hive2, \r\nand store/retrieve configuration documents and assembly data (e.g., Project Builder), as well as SO/Quote information.\r\nIt supports integration with both web and desktop configurator applications."
   contact:
@@ -49,40 +49,28 @@ paths:
           required: true
           schema:
             type: string
+            example: '000010000000245592858713653248'
           description: ADS ID
         - name: file-name
           in: query
           required: true
           schema:
             type: string
+            example: drawing.jpeg
           description: Uploading file name with extension
       responses:
         '200':
           description: "{\r\n    \"message\":\"string\"\r\n}"
           content:
-            application/json:
+            application/octet-stream:
               schema:
-                type: array
-                items:
-                  type: string
-        '400':
-          $ref: '#/components/responses/Error400'
-        '401':
-          $ref: '#/components/responses/Error401'
-        '403':
-          $ref: '#/components/responses/Error403'
-        '404':
-          $ref: '#/components/responses/Error404'
-        '429':
-          $ref: '#/components/responses/Error429'
-        '500':
-          $ref: '#/components/responses/Error500'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    value:
+                      message: document uploaded successfully
       x-stoplight:
         id: pqb5oet6jc37l
     parameters: []
@@ -98,39 +86,20 @@ paths:
           in: query
           schema:
             type: string
+            example: '000010000000245592858713653248'
           description: ADS ID to download documents for
           required: true
       responses:
         '200':
           description: Successful operation
           content:
-            application/zip:
+            application/gzip:
               schema:
-                type: string
-                format: binary
-        '400':
-          description: "{\r\n  \"code\": 0,\r\n  \"message\": \"string\"\r\n}"
-        '401':
-          $ref: '#/components/responses/Error401'
-        '403':
-          $ref: '#/components/responses/Error403'
-        '404':
-          $ref: '#/components/responses/Error404'
-        '429':
-          $ref: '#/components/responses/Error429'
-        '500':
-          $ref: '#/components/responses/Error500'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+                type: object
+                properties: {}
               examples:
                 Example 1:
-                  value:
-                    code: 0
-                    message: string
+                  value: {}
       x-stoplight:
         id: cvod4ugfycb02
     parameters: []
@@ -148,6 +117,7 @@ paths:
           required: true
           schema:
             type: string
+            example: '000010000000245592858713653248'
       responses:
         '200':
           description: "{\r\n  \"adsId\": \"string\",\r\n  \"orders\": [\r\n    {\r\n      \"orderingID\": \"string\",\r\n      \"hive2\": \"string\",\r\n      \"productCode\": \"string\",\r\n      \"hive2url\": \"string\"\r\n    }\r\n  ]\r\n}"
@@ -158,12 +128,12 @@ paths:
               examples:
                 Example 1:
                   value:
-                    adsId: string
+                    adsId: '000010000000245592858713653248 '
                     orders:
-                      - orderingID: string
-                        hive2: string
-                        productCode: string
-                        hive2url: string
+                      - orderingID: '30612'
+                        hive2: hive
+                        productCode: MTZ108_H124PMWNN
+                        hive2url: 'ads/000010000000245145581322764288/doc/hive2.xml '
         '400':
           description: "{\r\n  \"code\": 10,\r\n  \"message\": \"string\"\r\n}"
           content:
@@ -176,22 +146,6 @@ paths:
                   value:
                     code: 10
                     message: string
-        '401':
-          $ref: '#/components/responses/Error401'
-        '403':
-          $ref: '#/components/responses/Error403'
-        '404':
-          $ref: '#/components/responses/Error404'
-        '429':
-          $ref: '#/components/responses/Error429'
-        '500':
-          $ref: '#/components/responses/Error500'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
       x-stoplight:
         id: qu4sgzu1rt6gu
     parameters: []
@@ -209,6 +163,7 @@ paths:
           required: true
           schema:
             type: string
+            example: '000010000000245592858713653248'
       responses:
         '200':
           description: "{\r\n  \"data\": {\r\n    \"event\": \"string\",\r\n    \"filters\": [\r\n      \"string\"\r\n    ],\r\n    \"id\": \"string\",\r\n    \"lastModifiedAt\": \"string\",\r\n    \"source\": \"l\",\r\n    \"subSource\": \"string\",\r\n    \"username\": \"string\",\r\n    \"appId\": \"string\"\r\n  },\r\n  \"bom\": {\r\n    \"country\": \"B\",\r\n    \"documentUrl\": [\r\n      \"string\"\r\n    ],\r\n    \"isCto\": true,\r\n    \"groups\": [\r\n      {\r\n        \"groupName\": \"string\",\r\n        \"id\": \"string\",\r\n        \"parentGroupId\": \"string\",\r\n        \"qty\": 0\r\n      }\r\n    ],\r\n    \"locale\": \"string\",\r\n    \"products\": [\r\n      {\r\n        \"adsConfigId\": \"string\",\r\n        \"applicationSource\": \"%\",\r\n        \"name\": \"string\",\r\n        \"cost\": {\r\n          \"costDate\": \"string\",\r\n          \"currency\": \"string\",\r\n          \"overwriteCost\": true,\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\",\r\n          \"value\": 0\r\n        },\r\n        \"customization\": {\r\n          \"configuredReference\": \"string\",\r\n          \"custom-configuredReference1\": \"string\",\r\n          \"custom-configuredReference2\": \"string\"\r\n        },\r\n        \"description\": \"string\",\r\n        \"freeText\": \"string\",\r\n        \"freezeItem\": true,\r\n        \"groupId\": \"string\",\r\n        \"isParent\": true,\r\n        \"orderingData\": {\r\n          \"orderingId\": \"string\",\r\n          \"hive2\": \"string\",\r\n          \"hive2Url\": \"string\",\r\n          \"productCode\": \"string\",\r\n          \"edi\": \"string\"\r\n        },\r\n        \"partType\": \"string\",\r\n        \"bomLineItemNo\": \"string\",\r\n        \"price\": {\r\n          \"currency\": \"string\",\r\n          \"overwritePrice\": true,\r\n          \"value\": 0,\r\n          \"priceDate\": \"string\",\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\"\r\n        },\r\n        \"productId\": \"string\",\r\n        \"quantity\": 0,\r\n        \"reloadData\": {\r\n          \"reloadSolution\": {\r\n            \"empty\": true,\r\n            \"valueNode\": true,\r\n            \"containerNode\": true,\r\n            \"missingNode\": true,\r\n            \"array\": true,\r\n            \"object\": true,\r\n            \"nodeType\": \"ARRAY\",\r\n            \"pojo\": true,\r\n            \"number\": true,\r\n            \"integralNumber\": true,\r\n            \"floatingPointNumber\": true,\r\n            \"short\": true,\r\n            \"int\": true,\r\n            \"long\": true,\r\n            \"float\": true,\r\n            \"double\": true,\r\n            \"bigDecimal\": true,\r\n            \"bigInteger\": true,\r\n            \"textual\": true,\r\n            \"boolean\": true,\r\n            \"null\": true,\r\n            \"binary\": true\r\n          },\r\n          \"reloadConfiguration\": true,\r\n          \"reloadConfigurationId\": \"string\"\r\n        },\r\n        \"selector\": {\r\n          \"technology\": \"string\",\r\n          \"dataId\": \"string\",\r\n          \"project\": \"string\",\r\n          \"country\": \"string\",\r\n          \"language\": \"string\"\r\n        },\r\n        \"subparts\": [\r\n          {\r\n            \"cost\": {\r\n              \"costDate\": \"string\",\r\n              \"currency\": \"string\",\r\n              \"overwriteCost\": true,\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\",\r\n              \"value\": 0\r\n            },\r\n            \"description\": \"string\",\r\n            \"price\": {\r\n              \"currency\": \"string\",\r\n              \"overwritePrice\": true,\r\n              \"value\": 0,\r\n              \"priceDate\": \"string\",\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\"\r\n            },\r\n            \"productId\": \"string\",\r\n            \"quantity\": 0\r\n          }\r\n        ],\r\n        \"parent\": true\r\n      }\r\n    ],\r\n    \"cto\": true\r\n  }\r\n}"
@@ -341,19 +296,6 @@ paths:
                   value:
                     code: 10
                     message: string
-        '401':
-          $ref: '#/components/responses/Error401'
-        '403':
-          $ref: '#/components/responses/Error403'
-        '404':
-          $ref: '#/components/responses/Error404'
-        '429':
-          $ref: '#/components/responses/Error429'
-        '500':
-          $ref: '#/components/responses/Error500'
-        default:
-          description: Unexpected error
-          content: {}
       x-stoplight:
         id: 1y4baubc03dan
     parameters: []
@@ -371,6 +313,7 @@ paths:
           required: true
           schema:
             type: string
+            example: '000010000000245592858713653248'
       responses:
         '200':
           description: "{\r\n  \"reloadSolution\": {\"string\"\r\n   \r\n  },\r\n  \"reloadConfiguration\": true,\r\n  \"reloadConfigurationId\": \"string\"\r\n}"
@@ -418,27 +361,6 @@ paths:
                   value:
                     code: 10
                     message: string
-        '401':
-          $ref: '#/components/responses/Error401'
-        '403':
-          $ref: '#/components/responses/Error403'
-        '404':
-          $ref: '#/components/responses/Error404'
-        '429':
-          $ref: '#/components/responses/Error429'
-        '500':
-          $ref: '#/components/responses/Error500'
-        default:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-              examples:
-                Example 1:
-                  value:
-                    code: 0
-                    message: string
       x-stoplight:
         id: 6xmqowkkem3jz
     parameters: []
@@ -455,11 +377,6 @@ paths:
           required: true
           schema:
             type: string
-        - schema:
-            type: string
-          in: header
-          name: X-IDP-Authorization
-          description: A static key
       responses:
         '200':
           description: "{\r\n    \"status\": 200,\r\n    \"body\": \"string\",\r\n    \"error\": null\r\n}"
@@ -472,20 +389,10 @@ paths:
                   value:
                     status: 200
                     body: '000010000000245469048077287424'
-        '400':
-          $ref: '#/components/responses/Error400'
-        '401':
-          $ref: '#/components/responses/Error401'
-        '403':
-          $ref: '#/components/responses/Error403'
-        '404':
-          $ref: '#/components/responses/Error404'
-        '429':
-          $ref: '#/components/responses/Error429'
-        '500':
-          $ref: '#/components/responses/Error500'
       x-stoplight:
         id: r3373cfv6rd93
+      requestBody:
+        content: {}
     parameters:
       - schema:
           type: string
@@ -498,18 +405,14 @@ paths:
         in: header
         name: X-IDP-Authorization
         description: a static key
-  /wrapper/save:
+  '/wrapper/save/{app-id}':
     post:
       summary: Save Easy configuration
       description: 'This api will provide configurator users to save thier configurations in ADS. '
       operationId: savingConfigurator
       tags:
         - Wrapper Service
-      parameters:
-        - name: X-REQUEST-APPID
-          in: header
-          schema:
-            type: string
+      parameters: []
       requestBody:
         content:
           application/json:
@@ -519,120 +422,315 @@ paths:
               Example 1:
                 value:
                   data:
-                    event: string
-                    filters:
-                      - string
-                    id: string
-                    lastModifiedAt: string
-                    source: string
-                    subSource: string
-                    username: string
-                    appId: string
+                    event: ''
+                    filters: []
+                    id: '000010000000243045933292453888'
+                    lastModifiedAt: xxxxxx
+                    bomId: ''
+                    source: snc
+                    subSource: ''
+                    username: xxx
+                    widgetName: ''
+                    localConfigId: '371632'
                   bom:
-                    country: string
-                    documentUrl:
-                      - string
-                    isCto: true
-                    groups:
-                      - groupName: string
-                        id: string
-                        parentGroupId: string
-                        qty: 0
-                    locale: string
+                    country: SCHINT
+                    documentUrl: []
+                    groups: []
+                    reloadData:
+                      reloadConfiguration: true
+                      reloadSolution:
+                        id: S1----65262148----GCR_MTZ1_CB_X----KB_GCR_MTZ1_CB_X----241010.0--------EN%7Csaplb_*%3D%28J2EE301179320%29301179350%3Bversion%3D1%3Bpath%3D%2F%3Bdomain%3DuiSRDd8Bg5klPW4a2UsVDuhnh9NgkM4flr24cBQz%2BgPgQtzblJfNzkr%2F2UFimampoKvNF6yho9Qx3MNPujbFYbaiO2bLeRjDPg%3D%3D%7CJSESSIONID%3DRwtYuf11rW0nlYOAPEbAKokplyEOmAHWofMR_SAP1VQPKIKAMVvvZGZH_KHvVnON%3Bversion%3D1%3Bpath%3D%2F%3Bdomain%3D2CWqOOVnVwg%2B0ON6poa4rKQlR%2B3K93cnqGVhqg5%2B0V60gwM7lSVIm3GzrfxkXupsGJcoz61qz7zVx%2BSIPtORZGwM4Rmk91f19A%3D%3D
+                        kbId: KB_GCR_MTZ1_CB_X
+                        kbVersion: '241010.0'
+                        project: ANY
+                        alias: ''
+                        country: SCHINT
+                        kbLang: EN
+                        isComplete: true
+                        codification: MTZ106_H12X3PMWNN-SA3
+                        hasConflictingValues: false
+                        characteristicGroups:
+                          - id: tab cache
+                            name: tab cache
+                            bomPath: '0000'
+                            isVisible: false
+                            groupName: null
+                            groupIsComplete: false
+                            characteristics:
+                              - id: C_REF0_CONTENT
+                                name: Content case 0
+                                description: ''
+                                bomPath: '0000'
+                                values:
+                                  - value: MTZ1
+                                    valueId: MTZ1
+                                    isAssigned: true
+                                    isDefault: false
+                                    bomPath: null
+                                isVisible: true
+                                isRequired: false
+                                isReadOnly: true
+                                isConflicting: false
+                                isSystemDefault: false
+                                isSystemEnforced: true
+                                isValueAssigned: false
+                                quantity: 0
+                                unit: ''
+                                isMultiValued: false
+                            isExpanded: false
+                            hasItems: true
+                            hasRequiredCharacteristics: false
+                            canBeCleared: true
+                            visibleCharacteristicsCount: 85
+                        characteristicGroupNodes:
+                          - characteristicGroups:
+                              - id: tab cache
+                                name: tab cache
+                                bomPath: '0000'
+                                isVisible: false
+                                groupName: null
+                                groupIsComplete: false
+                                characteristics:
+                                  - id: C_REF0_CONTENT
+                                    name: Content case 0
+                                    description: ''
+                                    bomPath: '0000'
+                                    values:
+                                      - value: MTZ1
+                                        valueId: MTZ1
+                                        isAssigned: true
+                                        isDefault: false
+                                        bomPath: null
+                                    isVisible: true
+                                    isRequired: false
+                                    isReadOnly: true
+                                    isConflicting: false
+                                    isSystemDefault: false
+                                    isSystemEnforced: true
+                                    isValueAssigned: false
+                                    quantity: 0
+                                    unit: ''
+                                    isMultiValued: false
+                                isExpanded: false
+                                hasItems: true
+                                hasRequiredCharacteristics: false
+                                canBeCleared: true
+                                visibleCharacteristicsCount: 85
+                            name: GCR_MTZ1_CB_X
+                            description: Masterpact MTZ1 NT CB
+                            isComplete: true
+                            isConflicting: false
+                            id: '1'
+                            parentId: null
+                            isGhost: false
+                            position: 0
+                            quantity: 1
+                            displayParent: true
+                            bomPath: '0000'
+                        unsetCharacteristics:
+                          - id: '1'
+                            bomPath: '0000'
+                            valueId: null
+                        references:
+                          - id: LV847200
+                            quantity: 1
+                        hiveInstances:
+                          instances:
+                            - posnr: '0000'
+                              id: '00000001'
+                              qty: '1'
+                              parentId: null
+                              bompath: '0000'
+                              matnr: GCR_MTZ1_CB_X
+                              instances:
+                                - posnr: '0010'
+                                  id: '00000002'
+                                  qty: '1'
+                                  parentId: null
+                                  bompath: '00000010'
+                                  matnr: GCRS_C0000_CB_1
+                                  instances: []
+                    locale: EN
                     products:
-                      - adsConfigId: string
-                        applicationSource: string
-                        name: string
+                      - configId: '000010000000243045933292453888'
+                        applicationSource: '00001'
+                        name: KB_GCR_MTZ1_CB_X
                         cost:
-                          costDate: string
-                          currency: string
                           overwriteCost: true
-                          source: string
-                          sourceValue: string
-                          value: 0
+                          currency: ''
+                          value: 1
+                          costDate: ''
+                          source: ''
+                          sourceValue: '0'
                         customization:
-                          configuredReference: string
-                          custom-configuredReference1: string
-                          custom-configuredReference2: string
-                        description: string
-                        freeText: string
-                        freezeItem: true
-                        groupId: string
+                          configuredReference: ''
+                          custom-configuredReference1: ''
+                          custom-configuredReference2: ''
+                        description: ''
+                        freeText: ''
+                        freezeItem: false
+                        groupId: '1'
                         isParent: true
                         orderingData:
-                          orderingId: string
-                          hive2: string
-                          hive2Url: string
-                          productCode: string
-                          edi: string
-                        partType: string
-                        bomLineItemNo: string
+                          edi: ''
+                          hive2: <config alias_id="" country="SCHINT" du_id="DU_GCR_MTZ1_CB_X" du_status="SPE" guid="hive1752582774848" kbName="KB_GCR_MTZ1_CB_X." kbVersion="241010.0" kb_id="KB_GCR_MTZ1_CB_X" language="EN" languageCode="EN" project_id="ANY" scope="S000" setDefaults="true"><instance bompath="0000" id="00000001" matnr="GCR_MTZ1_CB_X" parent_Id="00000000" posnr="0000" qty="1"><cstic cstic_id="C_REF_TEMPLATE" value_id="1"/><cstic cstic_id="C_SEPARATOR" value_id="-"/><cstic cstic_id="C_TYPE_CODE" value_id="HYBRID"/><cstic cstic_id="TC_CHASSIS_DISCONNECT_POS_CONT" value_id="NOT_APPLICABLE"/><cstic cstic_id="YN_SWITCHBOARD_DOOR_INTERLOCK" value_id="NO"/><cstic cstic_id="YN_COVER_FOR_AUX_TERM_BLOCK" value_id="NO"/><cstic cstic_id="YN_CONTROL_AND_REMOTE_ON_OFF" value_id="YES"/><cstic cstic_id="YN_ARC_CHUTES_ISOLATING_SCREEN" value_id="NO"/><cstic cstic_id="YN_CIRCULAR_ECONOMY" value_id="NO"/><cstic cstic_id="YN_SOURCE_GROUND_RETURN" value_id="NO"/><cstic cstic_id="TC_CHASSIS_LOW_LEVEL_TEST_POS" value_id="NOT_APPLICABLE"/><cstic cstic_id="T_CIRCUIT_BREAKER_RATING_CODE" value_id="H1"/><cstic cstic_id="YN_EARTH_LEAK_SENSOR_280_X_115" value_id="NO"/><cstic cstic_id="YN_POWERTAG" value_id="NO"/><cstic cstic_id="TC_CHASSIS_CONNECTED_POS_CONT" value_id="NOT_APPLICABLE"/><cstic cstic_id="T_RATED_CURRENT" value_id="630_A"/><cstic cstic_id="TC_CHASSIS_TEST_POS_CONT" value_id="NOT_APPLICABLE"/><cstic cstic_id="YN_IDMT" value_id="NO"/><cstic cstic_id="TC_CHASSIS_LOW_LEVEL_CONN_POS" value_id="NOT_APPLICABLE"/><cstic cstic_id="TC_CHASSIS_LOW_LEVEL_DISC_POS" value_id="NOT_APPLICABLE"/><cstic cstic_id="YN_COMMUNICATION" value_id="YES"/><cstic cstic_id="YN_LOCKING_IN_ANY_POSITION" value_id="NO"/><cstic cstic_id="TC_MOUNTING_MODE" value_id="DRAWOUT_DEVICE_ALONE"/><cstic cstic_id="TC_RATED_OPERATIONAL_VOLTAGE" value_id="220..415_V"/><cstic cstic_id="T_TRIP_UNIT_NAME" value_id="MICROLOGIC_2.0_X"/><cstic cstic_id="YN_WIRELESS" value_id="NO"/><cstic cstic_id="T_POLES_DESCRIPTION" value_id="3P"/><cstic cstic_id="C_RELOAD" value_id="N"/><cstic cstic_id="C_REF7_LENGTH" value_id="2.0"/><cstic cstic_id="C_REF35_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF16_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF24_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF2_CONTENT" value_id="_H1"/><cstic cstic_id="C_REF30_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF13_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF19_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF5_LENGTH" value_id="1.0"/><cstic cstic_id="C_REF1_LENGTH" value_id="2.0"/><cstic cstic_id="C_REF3_CONTENT" value_id="2X"/><cstic cstic_id="C_REF29_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF8_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF38_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF5_CONTENT" value_id="M"/><cstic cstic_id="C_REF0_CONTENT" value_id="MTZ1"/><cstic cstic_id="C_REF27_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF22_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF11_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF3_LENGTH" value_id="2.0"/><cstic cstic_id="C_REF31_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF12_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF39_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF23_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF7_CONTENT" value_id="NN"/><cstic cstic_id="C_REF1_CONTENT" value_id="06"/><cstic cstic_id="C_REF4_CONTENT" value_id="3P"/><cstic cstic_id="C_REF6_LENGTH" value_id="1.0"/><cstic cstic_id="C_REF0_LENGTH" value_id="4.0"/><cstic cstic_id="C_REF20_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF25_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF36_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF14_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF40_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF9_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF6_CONTENT" value_id="W"/><cstic cstic_id="C_REF26_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF21_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF10_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF14_CONTENT" value_id="-SA3"/><cstic cstic_id="C_REF37_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF32_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF15_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF4_LENGTH" value_id="2.0"/><cstic cstic_id="C_REF2_LENGTH" value_id="3.0"/><cstic cstic_id="C_REF34_LENGTH" value_id="0.0"/><cstic cstic_id="C_REF28_LENGTH" value_id="0.0"/><cstic cstic_id="C_SCOPEREF_0400" value_id="LV847512"/><cstic cstic_id="C_SCOPEREF_0640" value_id="LV833763"/><cstic cstic_id="C_PRODUCT_COMPATIBILITY" value_id="MASTERPACT_MTZ1_06"/><cstic cstic_id="PRO_COMPATIBL_VER" value_id="220701.0"/><cstic cstic_id="C_SCOPEREF_0410" value_id="LV833806"/><cstic cstic_id="C_SCOPEREF_0650" value_id="LV833859SP"/><cstic cstic_id="C_SCOPEREF_0420" value_id="LV847483"/><cstic cstic_id="C_SCOPEREF_0660" value_id="LV833857SP"/><cstic cstic_id="YN_ACCESSORIES" value_id="YES"/><cstic cstic_id="C_SCOPEREF_0430" value_id="LV850009"/><cstic cstic_id="C_SCOPEREF_0670" value_id="LV833858SP"/><cstic cstic_id="C_SCOPEREF_0600" value_id="LV833788"/><cstic cstic_id="C_SCOPEREF_0840" value_id="LV850067SP"/><cstic cstic_id="C_SCOPEREF_0610" value_id="LV833767SP"/><cstic cstic_id="C_SCOPEREF_0850" value_id="LV848892SP"/><cstic cstic_id="C_SCOPE0190" value_id="1"/><cstic cstic_id="C_SCOPE1040" value_id="0"/><cstic cstic_id="YN_ARC_CHUTES_ISOLATING_SCR_1" value_id="NO"/><cstic cstic_id="C_SCOPEREF_0620" value_id="LV850060"/><cstic cstic_id="C_SCOPEREF_0630" value_id="LV833895"/><cstic cstic_id="C_SCOPEREF_0490" value_id="LV833756"/><cstic cstic_id="C_DFLT_SCOPE0860" value_id="1"/><cstic cstic_id="C_REF41_LENGTH" value_id="0.0"/><cstic cstic_id="C_SCOPE0840" value_id="1"/><cstic cstic_id="C_SCOPE0600" value_id="1"/><cstic cstic_id="YN_INDICATION" value_id="YES"/><cstic cstic_id="C_SCOPEREF_0240" value_id="LV850055SP"/><cstic cstic_id="C_SCOPEREF_0480" value_id="LV833753"/><cstic cstic_id="C_SCOPE0830" value_id="1"/><cstic cstic_id="PRO_MM_CURRENCY" value_id="EUR"/><cstic cstic_id="C_SCOPEREF_0010" value_id="LV847200"/><cstic cstic_id="C_SCOPEREF_0250" value_id="LV434001"/><cstic cstic_id="C_SCOPEREF_0270" value_id="LV836388"/><cstic cstic_id="C_QTY_CT_LL_N" value_id="0.0"/><cstic cstic_id="C_SCOPE0620" value_id="1"/><cstic cstic_id="TC_REF_BOM_ITEM_0740" value_id="LV847906"/><cstic cstic_id="C_SCOPEREF_0260" value_id="LV434002"/><cstic cstic_id="T_MOUNTING_MODE" value_id="DRAWOUT"/><cstic cstic_id="C_SCOPEREF_0280" value_id="LV850064"/><cstic cstic_id="C_SCOPE0610" value_id="1"/><cstic cstic_id="C_SCOPE0850" value_id="1"/><cstic cstic_id="C_SCOPEREF_0030" value_id="LV833722"/><cstic cstic_id="C_SCOPEREF_0440" value_id="LV847430"/><cstic cstic_id="C_SCOPEREF_0680" value_id="LV833642SP"/><cstic cstic_id="C_SCOPEREF_0210" value_id="LV434063"/><cstic cstic_id="C_SCOPEREF_0450" value_id="LV847431"/><cstic cstic_id="C_SCOPEREF_0690" value_id="LV833622SP"/><cstic cstic_id="C_SCOPE0820" value_id="1"/><cstic cstic_id="C_SCOPEREF_0220" value_id="LV434063"/><cstic cstic_id="C_SCOPEREF_0460" value_id="LV833751"/><cstic cstic_id="C_SCOPE0800" value_id="1"/><cstic cstic_id="TC_KEY_NUMBER_2" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_SCOPE0810" value_id="1"/><cstic cstic_id="C_SCOPEREF_0230" value_id="LV434211"/><cstic cstic_id="C_SCOPEREF_0470" value_id="LV833754"/><cstic cstic_id="YN_CHASSIS_WITH_IO_MOD" value_id="NO"/><cstic cstic_id="C_SCOPE0440" value_id="1"/><cstic cstic_id="C_SCOPE0680" value_id="1"/><cstic cstic_id="C_DEVICE_SHORT_NAME" value_id="MTZ1_06_H1"/><cstic cstic_id="C_SCOPE0430" value_id="1"/><cstic cstic_id="C_SCOPE0670" value_id="1"/><cstic cstic_id="C_SCOPE0220" value_id="1"/><cstic cstic_id="C_SCOPE0460" value_id="1"/><cstic cstic_id="YN_LOCKING" value_id="YES"/><cstic cstic_id="C_SCOPE0210" value_id="1"/><cstic cstic_id="C_SCOPE0690" value_id="1"/><cstic cstic_id="C_QTY_CD_LL_N" value_id="0.0"/><cstic cstic_id="C_SCOPE0450" value_id="1"/><cstic cstic_id="TC_QTY_BOM_ITEM_0020" value_id="1.0"/><cstic cstic_id="C_SCOPE0400" value_id="1"/><cstic cstic_id="C_SCOPE0640" value_id="1"/><cstic cstic_id="C_SCOPEREF_1010" value_id="LV850046"/><cstic cstic_id="C_SCOPEREF_0180" value_id="LV833573SP"/><cstic cstic_id="C_SCOPE0630" value_id="1"/><cstic cstic_id="C_STATUS5" value_id="1.0"/><cstic cstic_id="C_SCOPEREF_1040" value_id="LV850038"/><cstic cstic_id="C_SCOPEREF_0190" value_id="LV848891SP"/><cstic cstic_id="C_COMBINED_REF" value_id="NO"/><cstic cstic_id="C_SCOPE0660" value_id="1"/><cstic cstic_id="C_SCOPE0420" value_id="1"/><cstic cstic_id="C_SCOPEREF_1030" value_id="LV850018CN"/><cstic cstic_id="TC_QTY_BOM_ITEM_0010" value_id="1.0"/><cstic cstic_id="TC_KEY_NUMBER" value_id="NOT_APPLICABLE"/><cstic cstic_id="TC_CONTACT_QTY_6" value_id="0.0"/><cstic cstic_id="TC_CONTACT_QTY_5" value_id="0.0"/><cstic cstic_id="TC_CONTACT_QTY_4" value_id="0.0"/><cstic cstic_id="C_SCOPE0650" value_id="1"/><cstic cstic_id="TC_CONTACT_QTY_3" value_id="0.0"/><cstic cstic_id="TC_CONTACT_QTY_2" value_id="0.0"/><cstic cstic_id="C_SCOPE0410" value_id="1"/><cstic cstic_id="TC_CONTACT_QTY_1" value_id="0.0"/><cstic cstic_id="PRO_SO_TEXT" value_id="MTZ106_H12X3PMWNN"/><cstic cstic_id="C_SCOPEREF_0800" value_id="LV847906"/><cstic cstic_id="C_SCOPE0040" value_id="1"/><cstic cstic_id="C_SCOPE0280" value_id="1"/><cstic cstic_id="PRO_VAR4_1" value_id="_H1"/><cstic cstic_id="C_SCOPE0030" value_id="1"/><cstic cstic_id="C_SCOPE0270" value_id="1"/><cstic cstic_id="C_BOMITEM0020" value_id="1"/><cstic cstic_id="C_SCOPE0060" value_id="1"/><cstic cstic_id="C_BOMITEM0010" value_id="1"/><cstic cstic_id="C_SCOPEREF_0830" value_id="LV850012"/><cstic cstic_id="C_SCOPE0290" value_id="1"/><cstic cstic_id="C_SCOPE0050" value_id="1"/><cstic cstic_id="YN_OKKEN_PARTNER" value_id="NO"/><cstic cstic_id="C_BOMITEM0040" value_id="0"/><cstic cstic_id="C_SCOPE0480" value_id="1"/><cstic cstic_id="C_SCOPE0240" value_id="1"/><cstic cstic_id="PRO_VAR2_1" value_id="NN"/><cstic cstic_id="C_SCOPE0470" value_id="1"/><cstic cstic_id="C_SCOPE0230" value_id="1"/><cstic cstic_id="TC_REF_BOM_ITEM_0020" value_id="LV847281"/><cstic cstic_id="C_SCOPE0260" value_id="1"/><cstic cstic_id="C_BOMITEM0050" value_id="0"/><cstic cstic_id="C_SCOPE0250" value_id="1"/><cstic cstic_id="C_SCOPE0010" value_id="1"/><cstic cstic_id="TC_REF_BOM_ITEM_0010" value_id="LV847200"/><cstic cstic_id="C_SCOPE0490" value_id="1"/><cstic cstic_id="TC_QTY_BOM_ITEM_0740" value_id="1.0"/><cstic cstic_id="C_DEFAULT69" value_id="NO"/><cstic cstic_id="C_DEFAULT64" value_id="NO"/><cstic cstic_id="C_DEFAULT63" value_id="NO"/><cstic cstic_id="C_DEFAULT62" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_DEFAULT61" value_id="NO"/><cstic cstic_id="C_DEFAULT68" value_id="NO"/><cstic cstic_id="C_DEFAULT67" value_id="NO"/><cstic cstic_id="C_DEFAULT66" value_id="NO"/><cstic cstic_id="C_DEFAULT65" value_id="NO"/><cstic cstic_id="C_DEFAULT71" value_id="NO"/><cstic cstic_id="TC_CONTACT_QTY_MAX" value_id="0.0"/><cstic cstic_id="C_DEFAULT70" value_id="NO"/><cstic cstic_id="C_SCOPEREF_0760" value_id="LV833768SP"/><cstic cstic_id="C_DEFAULT59" value_id="NO"/><cstic cstic_id="C_DEFAULT58" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_DEFAULT53" value_id="NO"/><cstic cstic_id="C_DEFAULT52" value_id="NO"/><cstic cstic_id="C_DEFAULT51" value_id="NO"/><cstic cstic_id="C_DEFAULT50" value_id="NO"/><cstic cstic_id="C_DEFAULT57" value_id="NO"/><cstic cstic_id="C_DEFAULT56" value_id="NO"/><cstic cstic_id="C_DEFAULT55" value_id="NO"/><cstic cstic_id="C_DEFAULT54" value_id="NO"/><cstic cstic_id="C_DEFAULT60" value_id="NO"/><cstic cstic_id="C_SCOPE" value_id="S000"/><cstic cstic_id="C_SCOPEREF_0530" value_id="LV850011"/><cstic cstic_id="C_SCOPEREF_0770" value_id="LV847335SP"/><cstic cstic_id="C_SCOPEREF_0540" value_id="LV833897"/><cstic cstic_id="C_SCOPEREF_0780" value_id="LV850056"/><cstic cstic_id="C_SCOPEREF_0550" value_id="LV833921SP"/><cstic cstic_id="C_SCOPEREF_0790" value_id="LV833118"/><cstic cstic_id="C_DEFAULT28" value_id="NO"/><cstic cstic_id="C_DEFAULT26" value_id="NO"/><cstic cstic_id="C_DEFAULT25" value_id="NO"/><cstic cstic_id="C_DEFAULT29" value_id="NO"/><cstic cstic_id="C_DEFAULT20" value_id="NO"/><cstic cstic_id="C_DEFAULT24" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_DEFAULT23" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_DEFAULT22" value_id="NO"/><cstic cstic_id="C_DEFAULT21" value_id="NO"/><cstic cstic_id="C_SCOPEREF_0720" value_id="LV847335SP"/><cstic cstic_id="C_SCOPEREF_0960" value_id="LV834247"/><cstic cstic_id="C_SCOPE0080" value_id="1"/><cstic cstic_id="C_DEFAULT17" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_DEFAULT16" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_DEFAULT15" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_DEFAULT14" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_DEFAULT19" value_id="NO"/><cstic cstic_id="C_DEFAULT18" value_id="NO"/><cstic cstic_id="C_DEFAULT13" value_id="NO"/><cstic cstic_id="C_DEFAULT12" value_id="NO"/><cstic cstic_id="C_DEFAULT11" value_id="NO"/><cstic cstic_id="C_DEFAULT10" value_id="NO"/><cstic cstic_id="C_SCOPEREF_0730" value_id="LV833642SP"/><cstic cstic_id="C_SCOPE0070" value_id="1"/><cstic cstic_id="C_DEFAULT49" value_id="NO"/><cstic cstic_id="C_DEFAULT48" value_id="NO"/><cstic cstic_id="C_DEFAULT47" value_id="NO"/><cstic cstic_id="C_DEFAULT42" value_id="NO"/><cstic cstic_id="C_DEFAULT41" value_id="NO"/><cstic cstic_id="C_DEFAULT40" value_id="NO"/><cstic cstic_id="C_DEFAULT46" value_id="NO"/><cstic cstic_id="C_DEFAULT45" value_id="NO"/><cstic cstic_id="C_DEFAULT44" value_id="NO"/><cstic cstic_id="C_DEFAULT43" value_id="NO"/><cstic cstic_id="C_SCOPEREF_0500" value_id="LV833752"/><cstic cstic_id="C_SCOPEREF_0740" value_id="LV833622SP"/><cstic cstic_id="C_SCOPEREF_0980" value_id="LV850013"/><cstic cstic_id="C_DEFAULT39" value_id="NO"/><cstic cstic_id="C_DEFAULT38" value_id="NO"/><cstic cstic_id="C_SCOPE0090" value_id="1"/><cstic cstic_id="C_DEFAULT37" value_id="NO"/><cstic cstic_id="C_DEFAULT36" value_id="NO"/><cstic cstic_id="C_DEFAULT31" value_id="NO"/><cstic cstic_id="C_DEFAULT30" value_id="NO"/><cstic cstic_id="C_DEFAULT35" value_id="NO"/><cstic cstic_id="C_DEFAULT34" value_id="NO"/><cstic cstic_id="C_DEFAULT33" value_id="NO"/><cstic cstic_id="C_DEFAULT32" value_id="NO"/><cstic cstic_id="C_SCOPEREF_0510" value_id="LV833755"/><cstic cstic_id="C_SCOPEREF_0750" value_id="LV833644SP"/><cstic cstic_id="C_SCOPEREF_0990" value_id="LV850015"/><cstic cstic_id="C_BOMITEM0800" value_id="1"/><cstic cstic_id="C_SCOPE0720" value_id="1"/><cstic cstic_id="C_SCOPE0960" value_id="1"/><cstic cstic_id="C_SCOPEREF_0120" value_id="LV850002"/><cstic cstic_id="C_SCOPEREF_0380" value_id="LV847346"/><cstic cstic_id="C_SCOPE0950" value_id="1"/><cstic cstic_id="YN_EIFE" value_id="NO"/><cstic cstic_id="C_SCOPE0710" value_id="1"/><cstic cstic_id="C_SCOPEREF_0130" value_id="LV850003"/><cstic cstic_id="C_SCOPE0500" value_id="1"/><cstic cstic_id="C_QTY_CE_STD_N" value_id="0.0"/><cstic cstic_id="C_SCOPE0980" value_id="1"/><cstic cstic_id="C_SCOPE0740" value_id="1"/><cstic cstic_id="C_SCOPEREF_0140" value_id="LV850004"/><cstic cstic_id="C_SCOPEREF_0160" value_id="LV850007"/><cstic cstic_id="C_QTY1" value_id="0.0"/><cstic cstic_id="PRO_SO_MATERIAL_HELPER" value_id="GCR_MTZ1_CB_X"/><cstic cstic_id="C_SCOPE0730" value_id="1"/><cstic cstic_id="C_SCOPEREF_1000" value_id="LV850037"/><cstic cstic_id="C_QTY_CD_STD_N" value_id="0.0"/><cstic cstic_id="C_SCOPEREF_0150" value_id="LV850005"/><cstic cstic_id="C_SCOPE0920" value_id="1"/><cstic cstic_id="C_SCOPEREF_0570" value_id="LV833779"/><cstic cstic_id="C_SCOPE0940" value_id="1"/><cstic cstic_id="C_SCOPE0700" value_id="1"/><cstic cstic_id="C_SCOPEREF_0100" value_id="54446"/><cstic cstic_id="C_SCOPEREF_0580" value_id="LV833786"/><cstic cstic_id="C_SCOPE0930" value_id="1"/><cstic cstic_id="C_SCOPEREF_0110" value_id="LV847507"/><cstic cstic_id="C_SCOPEREF_0590" value_id="LV833787"/><cstic cstic_id="C_SCOPE0320" value_id="1"/><cstic cstic_id="C_SCOPE0560" value_id="1"/><cstic cstic_id="C_SCOPE0550" value_id="1"/><cstic cstic_id="C_SCOPE0310" value_id="1"/><cstic cstic_id="C_SCOPE0790" value_id="1"/><cstic cstic_id="C_SCOPE0100" value_id="1"/><cstic cstic_id="C_SCOPE0580" value_id="1"/><cstic cstic_id="C_SCOPE0340" value_id="1"/><cstic cstic_id="PRO_VAR1_1" value_id="W"/><cstic cstic_id="PRO_VAR1_2" value_id="M"/><cstic cstic_id="C_SCOPE0330" value_id="1"/><cstic cstic_id="C_SCOPE0570" value_id="1"/><cstic cstic_id="C_SCOPEREF_0290" value_id="LV851100"/><cstic cstic_id="C_SCOPE0760" value_id="1"/><cstic cstic_id="C_SCOPE0520" value_id="1"/><cstic cstic_id="C_SCOPEREF_0060" value_id="LV850006"/><cstic cstic_id="TC_QTY_BOM_ITEM_0150" value_id="1.0"/><cstic cstic_id="PRO_UPDATE_CONFIG_ITEM_TEXT" value_id="N"/><cstic cstic_id="C_SCOPE0510" value_id="1"/><cstic cstic_id="PRO_PROD_CODE_1" value_id="MTZ106_H1"/><cstic cstic_id="C_SCOPE0990" value_id="1"/><cstic cstic_id="C_SCOPE0750" value_id="1"/><cstic cstic_id="PRO_PROD_CODE_2" value_id="2X3PMWNN"/><cstic cstic_id="PRO_PROD_CODE_5" value_id="-SA3"/><cstic cstic_id="C_SCOPEREF_0070" value_id="LV833576SP"/><cstic cstic_id="C_SCOPE0540" value_id="1"/><cstic cstic_id="C_SCOPE0300" value_id="1"/><cstic cstic_id="C_SCOPE0780" value_id="1"/><cstic cstic_id="C_QTY_CT_STD_N" value_id="0.0"/><cstic cstic_id="C_SCOPEREF_0080" value_id="LV833579SP"/><cstic cstic_id="C_SCOPE0770" value_id="1"/><cstic cstic_id="C_SCOPE0530" value_id="1"/><cstic cstic_id="C_QTY_CE_LL_N" value_id="0.0"/><cstic cstic_id="C_DEFAULT3" value_id="NOT_APPLICABLE"/><cstic cstic_id="C_DEFAULT4" value_id="NO"/><cstic cstic_id="C_DEFAULT1" value_id="NO"/><cstic cstic_id="C_DEFAULT2" value_id="NO"/><cstic cstic_id="C_SCOPEREF_0920" value_id="LV845000"/><cstic cstic_id="C_DEFAULT7" value_id="NO"/><cstic cstic_id="C_DEFAULT8" value_id="NO"/><cstic cstic_id="C_DEFAULT5" value_id="NO"/><cstic cstic_id="C_SCOPE1010" value_id="1"/><cstic cstic_id="C_DEFAULT6" value_id="NO"/><cstic cstic_id="C_SCOPE0160" value_id="1"/><cstic cstic_id="C_DEFAULT9" value_id="NO"/><cstic cstic_id="TC_REF_BOM_ITEM_0150" value_id="LV847053"/><cstic cstic_id="C_SCOPEREF_0930" value_id="LV434000"/><cstic cstic_id="C_SCOPE0150" value_id="1"/><cstic cstic_id="C_SCOPE1000" value_id="1"/><cstic cstic_id="C_SCOPE0390" value_id="1"/><cstic cstic_id="C_PRODUCT_OR_COMPONENT_TYPE_2" value_id="ELECTRICAL_CLOSING_PUSH_BUTTON"/><cstic cstic_id="C_SCOPEREF_0700" value_id="LV833644SP"/><cstic cstic_id="C_SCOPEREF_0940" value_id="LV850045"/><cstic cstic_id="C_SCOPE1030" value_id="0"/><cstic cstic_id="C_SCOPE0180" value_id="1"/><cstic cstic_id="TC_CONTACT_QTY_1_MAX" value_id="0.0"/><cstic cstic_id="PRO_VAR5_1" value_id="MTZ1"/><cstic cstic_id="C_SCOPEREF_0710" value_id="LV833768SP"/><cstic cstic_id="PRO_VAR5_2" value_id="2X"/><cstic cstic_id="C_SCOPE0170" value_id="1"/><cstic cstic_id="C_SCOPE0360" value_id="1"/><cstic cstic_id="C_SCOPE0120" value_id="1"/><cstic cstic_id="TC_CONTACT_QTY_3_MAX" value_id="0.0"/><cstic cstic_id="C_SCOPE0110" value_id="1"/><cstic cstic_id="C_SCOPE0590" value_id="1"/><cstic cstic_id="C_SCOPE0350" value_id="1"/><cstic cstic_id="C_SCOPE0140" value_id="1"/><cstic cstic_id="PRO_DIR_SHIP" value_id="N"/><cstic cstic_id="C_SCOPE0380" value_id="1"/><cstic cstic_id="TC_CONTACT_QTY_2_MAX" value_id="0.0"/><cstic cstic_id="C_BOMITEM0170" value_id="1"/><cstic cstic_id="PRO_VAR3_1" value_id="06"/><cstic cstic_id="PRO_VAR3_2" value_id="3P"/><cstic cstic_id="C_SCOPE0370" value_id="1"/><cstic cstic_id="C_SCOPE0130" value_id="1"/></instance></config>
+                          hive2Url: ''
+                          orderingId: '371632'
+                          productCode: MTZ106_H12X3PMWNN-SA3
+                        partType: cto
+                        bomLineItemNo: ''
                         price:
-                          currency: string
-                          overwritePrice: true
+                          overwriteCost: false
+                          currency: ''
                           value: 0
-                          priceDate: string
-                          source: string
-                          sourceValue: string
-                        productId: string
-                        quantity: 0
+                          priceDate: ''
+                          source: ''
+                          sourceValue: ''
+                        productId: KB_GCR_MTZ1_CB_X
+                        quantity: 1
                         reloadData:
-                          reloadSolution:
-                            empty: true
-                            valueNode: true
-                            containerNode: true
-                            missingNode: true
-                            array: true
-                            object: true
-                            nodeType: ARRAY
-                            pojo: true
-                            number: true
-                            integralNumber: true
-                            floatingPointNumber: true
-                            short: true
-                            int: true
-                            long: true
-                            float: true
-                            double: true
-                            bigDecimal: true
-                            bigInteger: true
-                            textual: true
-                            boolean: true
-                            'null': true
-                            binary: true
                           reloadConfiguration: true
-                          reloadConfigurationId: string
+                          reloadSolution:
+                            id: S1----65262148----GCR_MTZ1_CB_X----KB_GCR_MTZ1_CB_X----241010.0--------EN%7Csaplb_*%3D%28J2EE301179320%29301179350%3Bversion%3D1%3Bpath%3D%2F%3Bdomain%3DuiSRDd8Bg5klPW4a2UsVDuhnh9NgkM4flr24cBQz%2BgPgQtzblJfNzkr%2F2UFimampoKvNF6yho9Qx3MNPujbFYbaiO2bLeRjDPg%3D%3D%7CJSESSIONID%3DRwtYuf11rW0nlYOAPEbAKokplyEOmAHWofMR_SAP1VQPKIKAMVvvZGZH_KHvVnON%3Bversion%3D1%3Bpath%3D%2F%3Bdomain%3D2CWqOOVnVwg%2B0ON6poa4rKQlR%2B3K93cnqGVhqg5%2B0V60gwM7lSVIm3GzrfxkXupsGJcoz61qz7zVx%2BSIPtORZGwM4Rmk91f19A%3D%3D
+                            kbId: KB_GCR_MTZ1_CB_X
+                            kbVersion: '241010.0'
+                            project: ANY
+                            alias: ''
+                            country: SCHINT
+                            kbLang: EN
+                            isComplete: true
+                            codification: MTZ106_H12X3PMWNN-SA3
+                            hasConflictingValues: false
+                            characteristicGroups:
+                              - id: tab cache
+                                name: tab cache
+                                bomPath: '0000'
+                                isVisible: false
+                                groupName: null
+                                groupIsComplete: false
+                                characteristics:
+                                  - id: C_REF0_CONTENT
+                                    name: Content case 0
+                                    description: ''
+                                    bomPath: '0000'
+                                    values:
+                                      - value: MTZ1
+                                        valueId: MTZ1
+                                        isAssigned: true
+                                        isDefault: false
+                                        bomPath: null
+                                    isVisible: true
+                                    isRequired: false
+                                    isReadOnly: true
+                                    isConflicting: false
+                                    isSystemDefault: false
+                                    isSystemEnforced: true
+                                    isValueAssigned: false
+                                    quantity: 0
+                                    unit: ''
+                                    isMultiValued: false
+                                isExpanded: false
+                                hasItems: true
+                                hasRequiredCharacteristics: false
+                                canBeCleared: true
+                                visibleCharacteristicsCount: 85
+                            characteristicGroupNodes:
+                              - characteristicGroups:
+                                  - id: tab cache
+                                    name: tab cache
+                                    bomPath: '0000'
+                                    isVisible: false
+                                    groupName: null
+                                    groupIsComplete: false
+                                    characteristics:
+                                      - id: C_REF0_CONTENT
+                                        name: Content case 0
+                                        description: ''
+                                        bomPath: '0000'
+                                        values:
+                                          - value: MTZ1
+                                            valueId: MTZ1
+                                            isAssigned: true
+                                            isDefault: false
+                                            bomPath: null
+                                        isVisible: true
+                                        isRequired: false
+                                        isReadOnly: true
+                                        isConflicting: false
+                                        isSystemDefault: false
+                                        isSystemEnforced: true
+                                        isValueAssigned: false
+                                        quantity: 0
+                                        unit: ''
+                                        isMultiValued: false
+                                    isExpanded: false
+                                    hasItems: true
+                                    hasRequiredCharacteristics: false
+                                    canBeCleared: true
+                                    visibleCharacteristicsCount: 85
+                                name: GCR_MTZ1_CB_X
+                                description: Masterpact MTZ1 NT CB
+                                isComplete: true
+                                isConflicting: false
+                                id: '1'
+                                parentId: null
+                                isGhost: false
+                                position: 0
+                                quantity: 1
+                                displayParent: true
+                                bomPath: '0000'
+                            unsetCharacteristics:
+                              - id: '1'
+                                bomPath: '0000'
+                                valueId: null
+                            references:
+                              - id: LV847200
+                                quantity: 1
+                            hiveInstances:
+                              instances:
+                                - posnr: '0000'
+                                  id: '00000001'
+                                  qty: '1'
+                                  parentId: null
+                                  bompath: '0000'
+                                  matnr: GCR_MTZ1_CB_X
+                                  instances:
+                                    - posnr: '0010'
+                                      id: '00000002'
+                                      qty: '1'
+                                      parentId: null
+                                      bompath: '00000010'
+                                      matnr: GCRS_C0000_CB_1
+                                      instances: []
                         selector:
-                          technology: string
-                          dataId: string
-                          project: string
-                          country: string
-                          language: string
+                          country: SCHINT
+                          dataId: KB_GCR_MTZ1_CB_X
+                          language: EN
+                          project: ANY
+                          technology: snc
                         subparts:
                           - cost:
-                              costDate: string
-                              currency: string
-                              overwriteCost: true
-                              source: string
-                              sourceValue: string
+                              overwriteCost: false
+                              currency: ''
                               value: 0
-                            description: string
+                              costDate: ''
+                              source: ''
+                              sourceValue: '0'
+                            description: ''
                             price:
-                              currency: string
-                              overwritePrice: true
+                              priceDate: ''
+                              currency: EUR
+                              overwritePrice: false
+                              sourceValue: '0'
+                              source: ''
                               value: 0
-                              priceDate: string
-                              source: string
-                              sourceValue: string
-                            productId: string
-                            quantity: 0
-                        parent: true
-                    cto: true
+                            productId: LV847200
+                            quantity: 1
         required: true
         description: "{\r\n  \"data\": {\r\n    \"event\": \"string\",\r\n    \"filters\": [\r\n      \"string\"\r\n    ],\r\n    \"id\": \"string\",\r\n    \"lastModifiedAt\": \"string\",\r\n    \"source\": \"D\",\r\n    \"subSource\": \"string\",\r\n    \"username\": \"string\",\r\n    \"widgetName\": \"string\",\r\n    \"localConfigId\": \"string\"\r\n  },\r\n  \"bom\": {\r\n    \"adsId\": \"string\",\r\n    \"country\": \"O\",\r\n    \"documentUrl\": [\r\n      \"string\"\r\n    ],\r\n    \"groups\": [\r\n      {\r\n        \"groupName\": \"string\",\r\n        \"id\": \"string\",\r\n        \"parentGroupId\": \"string\",\r\n        \"qty\": 0\r\n      }\r\n    ],\r\n    \"locale\": \"B\",\r\n    \"products\": [\r\n      {\r\n        \"configId\": \"string\",\r\n        \"applicationSource\": \"!\",\r\n        \"name\": \"string\",\r\n        \"cost\": {\r\n          \"costDate\": \"string\",\r\n          \"currency\": \"string\",\r\n          \"overwriteCost\": true,\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\",\r\n          \"value\": 0\r\n        },\r\n        \"customization\": {\r\n          \"configuredReference\": \"string\",\r\n          \"custom-configuredReference1\": \"string\",\r\n          \"custom-configuredReference2\": \"string\"\r\n        },\r\n        \"description\": \"string\",\r\n        \"freeText\": \"string\",\r\n        \"freezeItem\": true,\r\n        \"groupId\": \"string\",\r\n        \"isParent\": true,\r\n        \"orderingData\": {\r\n          \"orderingId\": \"string\",\r\n          \"hive2\": \"string\",\r\n          \"hive2Url\": \"string\",\r\n          \"productCode\": \"string\",\r\n          \"edi\": \"string\"\r\n        },\r\n        \"partType\": \"3\",\r\n        \"bomLineItemNo\": \"string\",\r\n        \"price\": {\r\n          \"currency\": \"string\",\r\n          \"overwritePrice\": true,\r\n          \"value\": 0,\r\n          \"priceDate\": \"string\",\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\"\r\n        },\r\n        \"productId\": \"X\",\r\n        \"quantity\": 0,\r\n        \"reloadData\": {\r\n          \"reloadSolution\": {\r\n            \"empty\": true,\r\n            \"valueNode\": true,\r\n            \"containerNode\": true,\r\n            \"missingNode\": true,\r\n            \"array\": true,\r\n            \"object\": true,\r\n            \"nodeType\": \"ARRAY\",\r\n            \"pojo\": true,\r\n            \"number\": true,\r\n            \"integralNumber\": true,\r\n            \"floatingPointNumber\": true,\r\n            \"short\": true,\r\n            \"int\": true,\r\n            \"long\": true,\r\n            \"float\": true,\r\n            \"double\": true,\r\n            \"bigDecimal\": true,\r\n            \"bigInteger\": true,\r\n            \"textual\": true,\r\n            \"boolean\": true,\r\n            \"null\": true,\r\n            \"binary\": true\r\n          },\r\n          \"reloadConfiguration\": true\r\n        },\r\n        \"selector\": {\r\n          \"technology\": \"string\",\r\n          \"dataId\": \"string\",\r\n          \"project\": \"string\",\r\n          \"country\": \"string\",\r\n          \"language\": \"string\"\r\n        },\r\n        \"subparts\": [\r\n          {\r\n            \"cost\": {\r\n              \"costDate\": \"string\",\r\n              \"currency\": \"string\",\r\n              \"overwriteCost\": true,\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\",\r\n              \"value\": 0\r\n            },\r\n            \"description\": \"string\",\r\n            \"price\": {\r\n              \"currency\": \"string\",\r\n              \"overwritePrice\": true,\r\n              \"value\": 0,\r\n              \"priceDate\": \"string\",\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\"\r\n            },\r\n            \"productId\": \"0\",\r\n            \"quantity\": 0\r\n          }\r\n        ],\r\n        \"parent\": true\r\n      }\r\n    ],\r\n    \"reloadData\": {\r\n      \"reloadSolution\": {\r\n        \"empty\": true,\r\n        \"valueNode\": true,\r\n        \"containerNode\": true,\r\n        \"missingNode\": true,\r\n        \"array\": true,\r\n        \"object\": true,\r\n        \"nodeType\": \"ARRAY\",\r\n        \"pojo\": true,\r\n        \"number\": true,\r\n        \"integralNumber\": true,\r\n        \"floatingPointNumber\": true,\r\n        \"short\": true,\r\n        \"int\": true,\r\n        \"long\": true,\r\n        \"float\": true,\r\n        \"double\": true,\r\n        \"bigDecimal\": true,\r\n        \"bigInteger\": true,\r\n        \"textual\": true,\r\n        \"boolean\": true,\r\n        \"null\": true,\r\n        \"binary\": true\r\n      },\r\n      \"reloadConfiguration\": true\r\n    }\r\n  }\r\n}"
       responses:
         '200':
-          description: "{\r\n    \"status\": 200,\r\n    \"body\": {\r\n        \"adsId\": \"string\",\r\n        \"configIds\": [\r\n            {\r\n                \"configId\": \"string\",\r\n                \"configurator\": \"string\"\r\n            }\r\n        ]\r\n    },\r\n    \"error\": null\r\n}"
+          description: "{\r\n    \"status\": 200,\r\n    \"body\": {\r\n        \"adsId\": \"string\",\r\n        \"configIds\": [\r\n            {\r\n                \"configId\": \"string\",\r\n                \"configurator\": \"string\"\r\n            }\r\n        ]\r\n    }\r\n}"
           content:
             application/json:
               schema:
@@ -642,7 +740,7 @@ paths:
                   value:
                     status: 0
                     body:
-                      adsId: string
+                      adsId: '000010000000245592858713653248 '
                       configIds:
                         - configId: string
                           configurator: string
@@ -651,40 +749,18 @@ paths:
                       code: string
         '400':
           description: "{\r\n    \"status\": 400,\r\n    \"body\": null,\r\n    \"error\": {\r\n        \"message\": \"string\",\r\n        \"code\": \"string\"\r\n    }\r\n}"
-        '401':
-          $ref: '#/components/responses/Error401'
-        '403':
-          $ref: '#/components/responses/Error403'
-        '404':
-          $ref: '#/components/responses/Error404'
-        '429':
-          $ref: '#/components/responses/Error429'
-        '500':
-          $ref: '#/components/responses/Error500'
       x-stoplight:
         id: 77nftjbwqyz1l
     parameters:
       - schema:
           type: string
-        in: header
-        name: X-IDP-Authorization
-        description: static key
-      - schema:
-          type: string
-        in: header
-        name: X-REQUEST-APPID
+          example: '00001'
+        name: app-id
+        in: path
+        required: true
         description: app id of the configurators
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
-      x-stoplight:
-        id: n5lx087vfzaky
     Order:
       type: object
       properties:
@@ -911,15 +987,16 @@ components:
         id: bauklfdgcz4ti
     ReloadDataDTO:
       type: object
+      x-stoplight:
+        id: oixaca2oqg7ff
       properties:
         reloadSolution:
-          $ref: '#/components/schemas/JsonNode'
+          type: object
+          additionalProperties: {}
         reloadConfiguration:
           type: boolean
         reloadConfigurationId:
           type: string
-      x-stoplight:
-        id: oixaca2oqg7ff
     SelectorDTO:
       type: object
       properties:
@@ -951,69 +1028,6 @@ components:
           format: int32
       x-stoplight:
         id: tokp4nifh1f1r
-    JsonNode:
-      type: object
-      properties:
-        empty:
-          type: boolean
-        valueNode:
-          type: boolean
-        containerNode:
-          type: boolean
-        missingNode:
-          type: boolean
-        array:
-          type: boolean
-        object:
-          type: boolean
-        nodeType:
-          $ref: '#/components/schemas/JsonNodeType'
-        pojo:
-          type: boolean
-        number:
-          type: boolean
-        integralNumber:
-          type: boolean
-        floatingPointNumber:
-          type: boolean
-        short:
-          type: boolean
-        int:
-          type: boolean
-        long:
-          type: boolean
-        float:
-          type: boolean
-        double:
-          type: boolean
-        bigDecimal:
-          type: boolean
-        bigInteger:
-          type: boolean
-        textual:
-          type: boolean
-        boolean:
-          type: boolean
-        'null':
-          type: boolean
-        binary:
-          type: boolean
-      x-stoplight:
-        id: 9a3a1hf7uvxgr
-    JsonNodeType:
-      type: string
-      enum:
-        - ARRAY
-        - BINARY
-        - BOOLEAN
-        - MISSING
-        - 'NULL'
-        - NUMBER
-        - OBJECT
-        - POJO
-        - STRING
-      x-stoplight:
-        id: eotun0lb8wpm3
     AdsResponseString:
       type: object
       properties:
@@ -1058,75 +1072,7 @@ components:
             $ref: '#/components/schemas/WpResponseChild'
       x-stoplight:
         id: w7msgi07vnjak
-    StandardError:
-      type: object
-      required:
-        - code
-        - userMessage
-        - developerMessage
-        - moreInfo
-      properties:
-        code:
-          type: string
-          description: Error code matching HTTP status class e.g. BAD_REQUEST
-        userMessage:
-          type: string
-          description: End-user friendly message tied to HTTP status
-        developerMessage:
-          type: string
-          description: Specific cause or debug detail for developers
-        moreInfo:
-          type: string
-          description: URL or extra details
-      x-stoplight:
-        id: 4a2azh8iskhcp
-  responses:
-    Error400:
-      description: "{\r\n    \"status\": 400,\r\n    \"body\": null,\r\n    \"error\": {\r\n        \"message\": \"string\",\r\n        \"code\": \"string\"\r\n    }\r\n}"
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/StandardError'
-          examples:
-            Example 1:
-              value:
-                code: '0'
-                userMessage: string
-                developerMessage: string
-                moreInfo: string
-    Error401:
-      description: ''
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/StandardError'
-    Error403:
-      description: "{\r\n    \"message\": \"string\"\r\n}"
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/StandardError'
-          examples: {}
-    Error404:
-      description: "{\r\n    \"status\": 404,\r\n    \"body\": null,\r\n    \"error\": {\r\n        \"message\": \"string\",\r\n        \"code\": \"string\"\r\n    }\r\n}"
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/StandardError'
-          examples: {}
-    Error429:
-      description: Too many requests
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/StandardError'
-    Error500:
-      description: "{\r\n    \"status\": 500,\r\n    \"body\": null,\r\n    \"error\": {\r\n        \"message\": \"string\",\r\n        \"code\": \"string\"\r\n    }\r\n}\r\n "
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/StandardError'
-          examples: {}
+  responses: {}
   requestBodies: {}
   headers: {}
   examples: {}
