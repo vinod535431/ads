@@ -175,115 +175,33 @@ paths:
                 Example 1:
                   value:
                     data:
-                      event: string
-                      filters:
-                        - string
-                      id: string
-                      lastModifiedAt: string
-                      source: i
-                      subSource: string
-                      username: string
-                      appId: string
+                      event: config_created
+                      id: '000010000000241524180091143168'
+                      lastModifiedAt: '2025-07-25T05:23:01.794Z'
+                      source: snc
+                      username: user1
+                      appId: app-xyz
                     bom:
-                      country: I
+                      country: IND
                       documentUrl:
-                        - string
-                      isCto: true
-                      groups:
-                        - groupName: string
-                          id: string
-                          parentGroupId: string
-                          qty: 0
-                      locale: string
+                        - ads/000010000000241524180091143168/request.json
+                      locale: EN
                       products:
-                        - adsConfigId: string
-                          applicationSource: K
-                          name: string
-                          cost:
-                            costDate: string
-                            currency: string
-                            overwriteCost: true
-                            source: string
-                            sourceValue: string
-                            value: 0
-                          customization:
-                            configuredReference: string
-                            custom-configuredReference1: string
-                            custom-configuredReference2: string
-                          description: string
-                          freeText: string
-                          freezeItem: true
-                          groupId: string
-                          isParent: true
+                        - productId: KB_GCR_MTZ1_CB_X
+                          name: Masterpact MTZ1
+                          applicationSource: c
+                          quantity: 1
+                          description: Circuit breaker
                           orderingData:
-                            orderingId: string
-                            hive2: string
-                            hive2Url: string
-                            productCode: string
-                            edi: string
-                          partType: string
-                          bomLineItemNo: string
+                            productCode: MTZ108_H12X4PMWNN
                           price:
-                            currency: string
-                            overwritePrice: true
+                            currency: EUR
                             value: 0
-                            priceDate: string
-                            source: string
-                            sourceValue: string
-                          productId: string
-                          quantity: 0
-                          reloadData:
-                            reloadSolution:
-                              empty: true
-                              valueNode: true
-                              containerNode: true
-                              missingNode: true
-                              array: true
-                              object: true
-                              nodeType: ARRAY
-                              pojo: true
-                              number: true
-                              integralNumber: true
-                              floatingPointNumber: true
-                              short: true
-                              int: true
-                              long: true
-                              float: true
-                              double: true
-                              bigDecimal: true
-                              bigInteger: true
-                              textual: true
-                              boolean: true
-                              'null': true
-                              binary: true
-                            reloadConfiguration: true
-                            reloadConfigurationId: string
-                          selector:
-                            technology: string
-                            dataId: string
-                            project: string
-                            country: string
-                            language: string
                           subparts:
-                            - cost:
-                                costDate: string
-                                currency: string
-                                overwriteCost: true
-                                source: string
-                                sourceValue: string
-                                value: 0
-                              description: string
-                              price:
-                                currency: string
-                                overwritePrice: true
-                                value: 0
-                                priceDate: string
-                                source: string
-                                sourceValue: string
-                              productId: string
-                              quantity: 0
-                          parent: true
-                      cto: true
+                            - productId: LV847215
+                              quantity: 1
+                            - productId: LV847281
+                              quantity: 1
         '400':
           description: "{\r\n  \"code\": 10,\r\n  \"message\": \"string\"\r\n}"
           content:
@@ -325,30 +243,17 @@ paths:
                 Example 1:
                   value:
                     reloadSolution:
-                      empty: true
-                      valueNode: true
-                      containerNode: true
-                      missingNode: true
-                      array: true
-                      object: true
                       nodeType: ARRAY
-                      pojo: true
-                      number: true
-                      integralNumber: true
-                      floatingPointNumber: true
-                      short: true
-                      int: true
-                      long: true
-                      float: true
-                      double: true
-                      bigDecimal: true
-                      bigInteger: true
-                      textual: true
-                      boolean: true
-                      'null': true
-                      binary: true
+                      arrayExample:
+                        - LV847215
+                        - LV847281
+                        - LV847281+1
+                      objectExample:
+                        productId: KB_GCR_MTZ1_CB_X
+                        name: Masterpact MTZ1
+                        quantity: 1
                     reloadConfiguration: true
-                    reloadConfigurationId: string
+                    reloadConfigurationId: '000010000000241524180091143168'
         '400':
           description: "{\r\n  \"code\": 10,\r\n  \"message\": \"string\"\r\n}"
           content:
@@ -379,7 +284,7 @@ paths:
             type: string
       responses:
         '200':
-          description: "{\r\n    \"status\": 200,\r\n    \"body\": \"string\",\r\n    \"error\": null\r\n}"
+          description: "{\r\n    \"status\": 200,\r\n    \"body\": \"string\",\r\n    \r\n}"
           content:
             application/json:
               schema:
