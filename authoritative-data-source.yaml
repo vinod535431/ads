@@ -1,0 +1,1142 @@
+openapi: 3.0.3
+x-stoplight:
+  id: ghswp4ggeiev6
+info:
+  title: Authoritative Data Source (ADS)
+  version: 1.0.0
+  description: "ADS is a data hub that consolidates configuration details from multiple configurators into a unified format for FO/BO applications, anchored by a unique ConfigID.\r\nIts architecture uses a common database/services layer compatible with legacy configurators, and APIs to generate ConfigIDs, fetch detailed configuration/BOM L1/Hive2, \r\nand store/retrieve configuration documents and assembly data (e.g., Project Builder), as well as SO/Quote information.\r\nIt supports integration with both web and desktop configurator applications."
+  contact:
+    name: Vinod Bathula
+    url: 'https//:www.se.com'
+    email: vinod.bathula@se.com
+servers:
+  - url: 'https://api.qa.se.com/v1/offer-design/authoritative-data'
+    description: QA
+tags:
+  - name: Upload
+    description: Upload Document
+  - name: Download
+    description: Download Document
+  - name: configuration
+    description: Configuration related APIS
+  - name: order
+    description: Order related APIS
+  - name: Wrapper Service
+    description: Wrapper service for saving configurations
+  - name: Id Generate Controller
+    description: Ads id generation for configurator
+paths:
+  /documents/upload:
+    post:
+      summary: Upload a documents  to ADS
+      description: "This is api will useful for to upload the relavent documents and images for the corresponding configurator \r\nby using ads-id."
+      operationId: uploadDocument
+      tags:
+        - Upload
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+            examples:
+              Example 1:
+                value: '/documents/upload?ads-Id=000010000000243162034277974016'' \ --form ''file-name=@"/C:/Users/Downloads/save_easy_format.txt"'''
+      parameters:
+        - name: ads-id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ADS ID
+        - name: file-name
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Uploading file name with extension
+      responses:
+        '200':
+          description: "{\r\n    \"message\":\"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '500':
+          $ref: '#/components/responses/Error500'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-stoplight:
+        id: pqb5oet6jc37l
+    parameters: []
+  /documents/download:
+    get:
+      summary: Download all documents associated with ADS ID
+      description: "This API will useful for to downloaf the documents and images by sending the ads-id. by using this feature factory team or \r\nconfiguration team can download the relavent configurator documents. "
+      operationId: downloadDocument
+      tags:
+        - Download
+      parameters:
+        - name: ads-id
+          in: query
+          schema:
+            type: string
+          description: ADS ID to download documents for
+          required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: "{\r\n  \"code\": 0,\r\n  \"message\": \"string\"\r\n}"
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '500':
+          $ref: '#/components/responses/Error500'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Example 1:
+                  value:
+                    code: 0
+                    message: string
+      x-stoplight:
+        id: cvod4ugfycb02
+    parameters: []
+  /services/orders:
+    get:
+      tags:
+        - order
+      summary: Getting orders by adsId
+      description: 'Get order information like OrderingID,hive2 and productCode asssociated with ADS ID.'
+      operationId: getOrder
+      parameters:
+        - name: ads-id
+          in: query
+          description: Ads Id should be needed to get order information
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "{\r\n  \"adsId\": \"string\",\r\n  \"orders\": [\r\n    {\r\n      \"orderingID\": \"string\",\r\n      \"hive2\": \"string\",\r\n      \"productCode\": \"string\",\r\n      \"hive2url\": \"string\"\r\n    }\r\n  ]\r\n}"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+              examples:
+                Example 1:
+                  value:
+                    adsId: string
+                    orders:
+                      - orderingID: string
+                        hive2: string
+                        productCode: string
+                        hive2url: string
+        '400':
+          description: "{\r\n  \"code\": 10,\r\n  \"message\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example:
+                  value:
+                    code: 10
+                    message: string
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '500':
+          $ref: '#/components/responses/Error500'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-stoplight:
+        id: qu4sgzu1rt6gu
+    parameters: []
+  /services/configuration:
+    get:
+      tags:
+        - configuration
+      summary: Getting configuration by adsId
+      description: This API will give configuration in easy format for the configurator by sending the ads-id
+      operationId: getConfiguration
+      parameters:
+        - name: ads-id
+          in: query
+          description: Ads Id should be needed to get configuration
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "{\r\n  \"data\": {\r\n    \"event\": \"string\",\r\n    \"filters\": [\r\n      \"string\"\r\n    ],\r\n    \"id\": \"string\",\r\n    \"lastModifiedAt\": \"string\",\r\n    \"source\": \"l\",\r\n    \"subSource\": \"string\",\r\n    \"username\": \"string\",\r\n    \"appId\": \"string\"\r\n  },\r\n  \"bom\": {\r\n    \"country\": \"B\",\r\n    \"documentUrl\": [\r\n      \"string\"\r\n    ],\r\n    \"isCto\": true,\r\n    \"groups\": [\r\n      {\r\n        \"groupName\": \"string\",\r\n        \"id\": \"string\",\r\n        \"parentGroupId\": \"string\",\r\n        \"qty\": 0\r\n      }\r\n    ],\r\n    \"locale\": \"string\",\r\n    \"products\": [\r\n      {\r\n        \"adsConfigId\": \"string\",\r\n        \"applicationSource\": \"%\",\r\n        \"name\": \"string\",\r\n        \"cost\": {\r\n          \"costDate\": \"string\",\r\n          \"currency\": \"string\",\r\n          \"overwriteCost\": true,\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\",\r\n          \"value\": 0\r\n        },\r\n        \"customization\": {\r\n          \"configuredReference\": \"string\",\r\n          \"custom-configuredReference1\": \"string\",\r\n          \"custom-configuredReference2\": \"string\"\r\n        },\r\n        \"description\": \"string\",\r\n        \"freeText\": \"string\",\r\n        \"freezeItem\": true,\r\n        \"groupId\": \"string\",\r\n        \"isParent\": true,\r\n        \"orderingData\": {\r\n          \"orderingId\": \"string\",\r\n          \"hive2\": \"string\",\r\n          \"hive2Url\": \"string\",\r\n          \"productCode\": \"string\",\r\n          \"edi\": \"string\"\r\n        },\r\n        \"partType\": \"string\",\r\n        \"bomLineItemNo\": \"string\",\r\n        \"price\": {\r\n          \"currency\": \"string\",\r\n          \"overwritePrice\": true,\r\n          \"value\": 0,\r\n          \"priceDate\": \"string\",\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\"\r\n        },\r\n        \"productId\": \"string\",\r\n        \"quantity\": 0,\r\n        \"reloadData\": {\r\n          \"reloadSolution\": {\r\n            \"empty\": true,\r\n            \"valueNode\": true,\r\n            \"containerNode\": true,\r\n            \"missingNode\": true,\r\n            \"array\": true,\r\n            \"object\": true,\r\n            \"nodeType\": \"ARRAY\",\r\n            \"pojo\": true,\r\n            \"number\": true,\r\n            \"integralNumber\": true,\r\n            \"floatingPointNumber\": true,\r\n            \"short\": true,\r\n            \"int\": true,\r\n            \"long\": true,\r\n            \"float\": true,\r\n            \"double\": true,\r\n            \"bigDecimal\": true,\r\n            \"bigInteger\": true,\r\n            \"textual\": true,\r\n            \"boolean\": true,\r\n            \"null\": true,\r\n            \"binary\": true\r\n          },\r\n          \"reloadConfiguration\": true,\r\n          \"reloadConfigurationId\": \"string\"\r\n        },\r\n        \"selector\": {\r\n          \"technology\": \"string\",\r\n          \"dataId\": \"string\",\r\n          \"project\": \"string\",\r\n          \"country\": \"string\",\r\n          \"language\": \"string\"\r\n        },\r\n        \"subparts\": [\r\n          {\r\n            \"cost\": {\r\n              \"costDate\": \"string\",\r\n              \"currency\": \"string\",\r\n              \"overwriteCost\": true,\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\",\r\n              \"value\": 0\r\n            },\r\n            \"description\": \"string\",\r\n            \"price\": {\r\n              \"currency\": \"string\",\r\n              \"overwritePrice\": true,\r\n              \"value\": 0,\r\n              \"priceDate\": \"string\",\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\"\r\n            },\r\n            \"productId\": \"string\",\r\n            \"quantity\": 0\r\n          }\r\n        ],\r\n        \"parent\": true\r\n      }\r\n    ],\r\n    \"cto\": true\r\n  }\r\n}"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BomRootDTO'
+              examples:
+                Example 1:
+                  value:
+                    data:
+                      event: string
+                      filters:
+                        - string
+                      id: string
+                      lastModifiedAt: string
+                      source: i
+                      subSource: string
+                      username: string
+                      appId: string
+                    bom:
+                      country: I
+                      documentUrl:
+                        - string
+                      isCto: true
+                      groups:
+                        - groupName: string
+                          id: string
+                          parentGroupId: string
+                          qty: 0
+                      locale: string
+                      products:
+                        - adsConfigId: string
+                          applicationSource: K
+                          name: string
+                          cost:
+                            costDate: string
+                            currency: string
+                            overwriteCost: true
+                            source: string
+                            sourceValue: string
+                            value: 0
+                          customization:
+                            configuredReference: string
+                            custom-configuredReference1: string
+                            custom-configuredReference2: string
+                          description: string
+                          freeText: string
+                          freezeItem: true
+                          groupId: string
+                          isParent: true
+                          orderingData:
+                            orderingId: string
+                            hive2: string
+                            hive2Url: string
+                            productCode: string
+                            edi: string
+                          partType: string
+                          bomLineItemNo: string
+                          price:
+                            currency: string
+                            overwritePrice: true
+                            value: 0
+                            priceDate: string
+                            source: string
+                            sourceValue: string
+                          productId: string
+                          quantity: 0
+                          reloadData:
+                            reloadSolution:
+                              empty: true
+                              valueNode: true
+                              containerNode: true
+                              missingNode: true
+                              array: true
+                              object: true
+                              nodeType: ARRAY
+                              pojo: true
+                              number: true
+                              integralNumber: true
+                              floatingPointNumber: true
+                              short: true
+                              int: true
+                              long: true
+                              float: true
+                              double: true
+                              bigDecimal: true
+                              bigInteger: true
+                              textual: true
+                              boolean: true
+                              'null': true
+                              binary: true
+                            reloadConfiguration: true
+                            reloadConfigurationId: string
+                          selector:
+                            technology: string
+                            dataId: string
+                            project: string
+                            country: string
+                            language: string
+                          subparts:
+                            - cost:
+                                costDate: string
+                                currency: string
+                                overwriteCost: true
+                                source: string
+                                sourceValue: string
+                                value: 0
+                              description: string
+                              price:
+                                currency: string
+                                overwritePrice: true
+                                value: 0
+                                priceDate: string
+                                source: string
+                                sourceValue: string
+                              productId: string
+                              quantity: 0
+                          parent: true
+                      cto: true
+        '400':
+          description: "{\r\n  \"code\": 10,\r\n  \"message\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 10
+                    message: string
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '500':
+          $ref: '#/components/responses/Error500'
+        default:
+          description: Unexpected error
+          content: {}
+      x-stoplight:
+        id: 1y4baubc03dan
+    parameters: []
+  /services/reload:
+    get:
+      tags:
+        - configuration
+      summary: Get reload configuration data by adsId
+      description: 'This API will provide the feature to users to reload the configuration by using ads-id which saved in audhrotitaive data source. '
+      operationId: getReload
+      parameters:
+        - name: ads-id
+          in: query
+          description: Ads Id should be needed to get reload data
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "{\r\n  \"reloadSolution\": {\"string\"\r\n   \r\n  },\r\n  \"reloadConfiguration\": true,\r\n  \"reloadConfigurationId\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReloadDataDTO'
+              examples:
+                Example 1:
+                  value:
+                    reloadSolution:
+                      empty: true
+                      valueNode: true
+                      containerNode: true
+                      missingNode: true
+                      array: true
+                      object: true
+                      nodeType: ARRAY
+                      pojo: true
+                      number: true
+                      integralNumber: true
+                      floatingPointNumber: true
+                      short: true
+                      int: true
+                      long: true
+                      float: true
+                      double: true
+                      bigDecimal: true
+                      bigInteger: true
+                      textual: true
+                      boolean: true
+                      'null': true
+                      binary: true
+                    reloadConfiguration: true
+                    reloadConfigurationId: string
+        '400':
+          description: "{\r\n  \"code\": 10,\r\n  \"message\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 10
+                    message: string
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '500':
+          $ref: '#/components/responses/Error500'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Example 1:
+                  value:
+                    code: 0
+                    message: string
+      x-stoplight:
+        id: 6xmqowkkem3jz
+    parameters: []
+  '/generate-id/{app-id}':
+    get:
+      summary: Generate Ads Id
+      description: Generate a unique 30 chatacters id for configurator and it will be used as ads-id across authoritative data source application.
+      operationId: generationId
+      tags:
+        - Id Generate Controller
+      parameters:
+        - name: app-id
+          in: path
+          required: true
+          schema:
+            type: string
+        - schema:
+            type: string
+          in: header
+          name: X-IDP-Authorization
+          description: A static key
+      responses:
+        '200':
+          description: "{\r\n    \"status\": 200,\r\n    \"body\": \"string\",\r\n    \"error\": null\r\n}"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdsResponseString'
+              examples:
+                Example 1:
+                  value:
+                    status: 200
+                    body: '000010000000245469048077287424'
+        '400':
+          $ref: '#/components/responses/Error400'
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '500':
+          $ref: '#/components/responses/Error500'
+      x-stoplight:
+        id: r3373cfv6rd93
+    parameters:
+      - schema:
+          type: string
+        name: app-id
+        in: path
+        required: true
+        description: a unique id from the external configurators
+      - schema:
+          type: string
+        in: header
+        name: X-IDP-Authorization
+        description: a static key
+  /wrapper/save:
+    post:
+      summary: Save Easy configuration
+      description: 'This api will provide configurator users to save thier configurations in ADS. '
+      operationId: savingConfigurator
+      tags:
+        - Wrapper Service
+      parameters:
+        - name: X-REQUEST-APPID
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BomRootDTO'
+            examples:
+              Example 1:
+                value:
+                  data:
+                    event: string
+                    filters:
+                      - string
+                    id: string
+                    lastModifiedAt: string
+                    source: string
+                    subSource: string
+                    username: string
+                    appId: string
+                  bom:
+                    country: string
+                    documentUrl:
+                      - string
+                    isCto: true
+                    groups:
+                      - groupName: string
+                        id: string
+                        parentGroupId: string
+                        qty: 0
+                    locale: string
+                    products:
+                      - adsConfigId: string
+                        applicationSource: string
+                        name: string
+                        cost:
+                          costDate: string
+                          currency: string
+                          overwriteCost: true
+                          source: string
+                          sourceValue: string
+                          value: 0
+                        customization:
+                          configuredReference: string
+                          custom-configuredReference1: string
+                          custom-configuredReference2: string
+                        description: string
+                        freeText: string
+                        freezeItem: true
+                        groupId: string
+                        isParent: true
+                        orderingData:
+                          orderingId: string
+                          hive2: string
+                          hive2Url: string
+                          productCode: string
+                          edi: string
+                        partType: string
+                        bomLineItemNo: string
+                        price:
+                          currency: string
+                          overwritePrice: true
+                          value: 0
+                          priceDate: string
+                          source: string
+                          sourceValue: string
+                        productId: string
+                        quantity: 0
+                        reloadData:
+                          reloadSolution:
+                            empty: true
+                            valueNode: true
+                            containerNode: true
+                            missingNode: true
+                            array: true
+                            object: true
+                            nodeType: ARRAY
+                            pojo: true
+                            number: true
+                            integralNumber: true
+                            floatingPointNumber: true
+                            short: true
+                            int: true
+                            long: true
+                            float: true
+                            double: true
+                            bigDecimal: true
+                            bigInteger: true
+                            textual: true
+                            boolean: true
+                            'null': true
+                            binary: true
+                          reloadConfiguration: true
+                          reloadConfigurationId: string
+                        selector:
+                          technology: string
+                          dataId: string
+                          project: string
+                          country: string
+                          language: string
+                        subparts:
+                          - cost:
+                              costDate: string
+                              currency: string
+                              overwriteCost: true
+                              source: string
+                              sourceValue: string
+                              value: 0
+                            description: string
+                            price:
+                              currency: string
+                              overwritePrice: true
+                              value: 0
+                              priceDate: string
+                              source: string
+                              sourceValue: string
+                            productId: string
+                            quantity: 0
+                        parent: true
+                    cto: true
+        required: true
+        description: "{\r\n  \"data\": {\r\n    \"event\": \"string\",\r\n    \"filters\": [\r\n      \"string\"\r\n    ],\r\n    \"id\": \"string\",\r\n    \"lastModifiedAt\": \"string\",\r\n    \"source\": \"D\",\r\n    \"subSource\": \"string\",\r\n    \"username\": \"string\",\r\n    \"widgetName\": \"string\",\r\n    \"localConfigId\": \"string\"\r\n  },\r\n  \"bom\": {\r\n    \"adsId\": \"string\",\r\n    \"country\": \"O\",\r\n    \"documentUrl\": [\r\n      \"string\"\r\n    ],\r\n    \"groups\": [\r\n      {\r\n        \"groupName\": \"string\",\r\n        \"id\": \"string\",\r\n        \"parentGroupId\": \"string\",\r\n        \"qty\": 0\r\n      }\r\n    ],\r\n    \"locale\": \"B\",\r\n    \"products\": [\r\n      {\r\n        \"configId\": \"string\",\r\n        \"applicationSource\": \"!\",\r\n        \"name\": \"string\",\r\n        \"cost\": {\r\n          \"costDate\": \"string\",\r\n          \"currency\": \"string\",\r\n          \"overwriteCost\": true,\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\",\r\n          \"value\": 0\r\n        },\r\n        \"customization\": {\r\n          \"configuredReference\": \"string\",\r\n          \"custom-configuredReference1\": \"string\",\r\n          \"custom-configuredReference2\": \"string\"\r\n        },\r\n        \"description\": \"string\",\r\n        \"freeText\": \"string\",\r\n        \"freezeItem\": true,\r\n        \"groupId\": \"string\",\r\n        \"isParent\": true,\r\n        \"orderingData\": {\r\n          \"orderingId\": \"string\",\r\n          \"hive2\": \"string\",\r\n          \"hive2Url\": \"string\",\r\n          \"productCode\": \"string\",\r\n          \"edi\": \"string\"\r\n        },\r\n        \"partType\": \"3\",\r\n        \"bomLineItemNo\": \"string\",\r\n        \"price\": {\r\n          \"currency\": \"string\",\r\n          \"overwritePrice\": true,\r\n          \"value\": 0,\r\n          \"priceDate\": \"string\",\r\n          \"source\": \"string\",\r\n          \"sourceValue\": \"string\"\r\n        },\r\n        \"productId\": \"X\",\r\n        \"quantity\": 0,\r\n        \"reloadData\": {\r\n          \"reloadSolution\": {\r\n            \"empty\": true,\r\n            \"valueNode\": true,\r\n            \"containerNode\": true,\r\n            \"missingNode\": true,\r\n            \"array\": true,\r\n            \"object\": true,\r\n            \"nodeType\": \"ARRAY\",\r\n            \"pojo\": true,\r\n            \"number\": true,\r\n            \"integralNumber\": true,\r\n            \"floatingPointNumber\": true,\r\n            \"short\": true,\r\n            \"int\": true,\r\n            \"long\": true,\r\n            \"float\": true,\r\n            \"double\": true,\r\n            \"bigDecimal\": true,\r\n            \"bigInteger\": true,\r\n            \"textual\": true,\r\n            \"boolean\": true,\r\n            \"null\": true,\r\n            \"binary\": true\r\n          },\r\n          \"reloadConfiguration\": true\r\n        },\r\n        \"selector\": {\r\n          \"technology\": \"string\",\r\n          \"dataId\": \"string\",\r\n          \"project\": \"string\",\r\n          \"country\": \"string\",\r\n          \"language\": \"string\"\r\n        },\r\n        \"subparts\": [\r\n          {\r\n            \"cost\": {\r\n              \"costDate\": \"string\",\r\n              \"currency\": \"string\",\r\n              \"overwriteCost\": true,\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\",\r\n              \"value\": 0\r\n            },\r\n            \"description\": \"string\",\r\n            \"price\": {\r\n              \"currency\": \"string\",\r\n              \"overwritePrice\": true,\r\n              \"value\": 0,\r\n              \"priceDate\": \"string\",\r\n              \"source\": \"string\",\r\n              \"sourceValue\": \"string\"\r\n            },\r\n            \"productId\": \"0\",\r\n            \"quantity\": 0\r\n          }\r\n        ],\r\n        \"parent\": true\r\n      }\r\n    ],\r\n    \"reloadData\": {\r\n      \"reloadSolution\": {\r\n        \"empty\": true,\r\n        \"valueNode\": true,\r\n        \"containerNode\": true,\r\n        \"missingNode\": true,\r\n        \"array\": true,\r\n        \"object\": true,\r\n        \"nodeType\": \"ARRAY\",\r\n        \"pojo\": true,\r\n        \"number\": true,\r\n        \"integralNumber\": true,\r\n        \"floatingPointNumber\": true,\r\n        \"short\": true,\r\n        \"int\": true,\r\n        \"long\": true,\r\n        \"float\": true,\r\n        \"double\": true,\r\n        \"bigDecimal\": true,\r\n        \"bigInteger\": true,\r\n        \"textual\": true,\r\n        \"boolean\": true,\r\n        \"null\": true,\r\n        \"binary\": true\r\n      },\r\n      \"reloadConfiguration\": true\r\n    }\r\n  }\r\n}"
+      responses:
+        '200':
+          description: "{\r\n    \"status\": 200,\r\n    \"body\": {\r\n        \"adsId\": \"string\",\r\n        \"configIds\": [\r\n            {\r\n                \"configId\": \"string\",\r\n                \"configurator\": \"string\"\r\n            }\r\n        ]\r\n    },\r\n    \"error\": null\r\n}"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdsResponseWpResponseDTO'
+              examples:
+                Example 1:
+                  value:
+                    status: 0
+                    body:
+                      adsId: string
+                      configIds:
+                        - configId: string
+                          configurator: string
+                    error:
+                      message: string
+                      code: string
+        '400':
+          description: "{\r\n    \"status\": 400,\r\n    \"body\": null,\r\n    \"error\": {\r\n        \"message\": \"string\",\r\n        \"code\": \"string\"\r\n    }\r\n}"
+        '401':
+          $ref: '#/components/responses/Error401'
+        '403':
+          $ref: '#/components/responses/Error403'
+        '404':
+          $ref: '#/components/responses/Error404'
+        '429':
+          $ref: '#/components/responses/Error429'
+        '500':
+          $ref: '#/components/responses/Error500'
+      x-stoplight:
+        id: 77nftjbwqyz1l
+    parameters:
+      - schema:
+          type: string
+        in: header
+        name: X-IDP-Authorization
+        description: static key
+      - schema:
+          type: string
+        in: header
+        name: X-REQUEST-APPID
+        description: app id of the configurators
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      x-stoplight:
+        id: n5lx087vfzaky
+    Order:
+      type: object
+      properties:
+        adsId:
+          type: string
+        orders:
+          type: array
+          items:
+            type: object
+            properties:
+              orderingID:
+                type: string
+              hive2:
+                type: string
+              productCode:
+                type: string
+              hive2url:
+                type: string
+      x-stoplight:
+        id: fpyog2gtyc8wj
+    BomDTO:
+      type: object
+      required:
+        - country
+        - products
+      properties:
+        country:
+          type: string
+          pattern: \S
+        documentUrl:
+          type: array
+          items:
+            type: string
+        isCto:
+          type: boolean
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupDTO'
+        locale:
+          type: string
+        products:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ProductDTO'
+        cto:
+          type: boolean
+      x-stoplight:
+        id: yb8ydzz876lht
+    BomRootDTO:
+      type: object
+      required:
+        - data
+        - bom
+      properties:
+        data:
+          $ref: '#/components/schemas/DataDTO'
+        bom:
+          $ref: '#/components/schemas/BomDTO'
+      x-stoplight:
+        id: nrd6ygky1sbio
+    CostDTO:
+      type: object
+      properties:
+        costDate:
+          type: string
+        currency:
+          type: string
+        overwriteCost:
+          type: boolean
+        source:
+          type: string
+        sourceValue:
+          type: string
+        value:
+          type: integer
+          format: int32
+      x-stoplight:
+        id: j90xhdhs1it0j
+    CustomizationDTO:
+      type: object
+      properties:
+        configuredReference:
+          type: string
+        custom-configuredReference1:
+          type: string
+        custom-configuredReference2:
+          type: string
+      x-stoplight:
+        id: 84191e08mctvy
+    DataDTO:
+      type: object
+      required:
+        - source
+      properties:
+        event:
+          type: string
+        filters:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+        lastModifiedAt:
+          type: string
+        source:
+          type: string
+          pattern: \S
+        subSource:
+          type: string
+        username:
+          type: string
+        appId:
+          type: string
+      x-stoplight:
+        id: 92zd3vidwrh5x
+    ErrorDetails:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+      x-stoplight:
+        id: ag6zjk8r10bd4
+    GroupDTO:
+      type: object
+      properties:
+        groupName:
+          type: string
+        id:
+          type: string
+        parentGroupId:
+          type: string
+        qty:
+          type: integer
+          format: int32
+      x-stoplight:
+        id: 1nrpxs1mnrz5m
+    OrderingDataDTO:
+      type: object
+      properties:
+        orderingId:
+          type: string
+        hive2:
+          type: string
+        hive2Url:
+          type: string
+        productCode:
+          type: string
+        edi:
+          type: string
+      x-stoplight:
+        id: 6no7yp1jz9z52
+    PriceDTO:
+      type: object
+      properties:
+        currency:
+          type: string
+        overwritePrice:
+          type: boolean
+        value:
+          type: integer
+          format: int32
+        priceDate:
+          type: string
+        source:
+          type: string
+        sourceValue:
+          type: string
+      x-stoplight:
+        id: pjj35523ovcuk
+    ProductDTO:
+      type: object
+      required:
+        - applicationSource
+      properties:
+        adsConfigId:
+          type: string
+        applicationSource:
+          type: string
+          pattern: \S
+        name:
+          type: string
+        cost:
+          $ref: '#/components/schemas/CostDTO'
+        customization:
+          $ref: '#/components/schemas/CustomizationDTO'
+        description:
+          type: string
+        freeText:
+          type: string
+        freezeItem:
+          type: boolean
+        groupId:
+          type: string
+        isParent:
+          type: boolean
+        orderingData:
+          $ref: '#/components/schemas/OrderingDataDTO'
+        partType:
+          type: string
+        bomLineItemNo:
+          type: string
+        price:
+          $ref: '#/components/schemas/PriceDTO'
+        productId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        reloadData:
+          $ref: '#/components/schemas/ReloadDataDTO'
+        selector:
+          $ref: '#/components/schemas/SelectorDTO'
+        subparts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubpartDTO'
+        parent:
+          type: boolean
+      x-stoplight:
+        id: bauklfdgcz4ti
+    ReloadDataDTO:
+      type: object
+      properties:
+        reloadSolution:
+          $ref: '#/components/schemas/JsonNode'
+        reloadConfiguration:
+          type: boolean
+        reloadConfigurationId:
+          type: string
+      x-stoplight:
+        id: oixaca2oqg7ff
+    SelectorDTO:
+      type: object
+      properties:
+        technology:
+          type: string
+        dataId:
+          type: string
+        project:
+          type: string
+        country:
+          type: string
+        language:
+          type: string
+      x-stoplight:
+        id: xwl29rp9yrkbh
+    SubpartDTO:
+      type: object
+      properties:
+        cost:
+          $ref: '#/components/schemas/CostDTO'
+        description:
+          type: string
+        price:
+          $ref: '#/components/schemas/PriceDTO'
+        productId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+      x-stoplight:
+        id: tokp4nifh1f1r
+    JsonNode:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        valueNode:
+          type: boolean
+        containerNode:
+          type: boolean
+        missingNode:
+          type: boolean
+        array:
+          type: boolean
+        object:
+          type: boolean
+        nodeType:
+          $ref: '#/components/schemas/JsonNodeType'
+        pojo:
+          type: boolean
+        number:
+          type: boolean
+        integralNumber:
+          type: boolean
+        floatingPointNumber:
+          type: boolean
+        short:
+          type: boolean
+        int:
+          type: boolean
+        long:
+          type: boolean
+        float:
+          type: boolean
+        double:
+          type: boolean
+        bigDecimal:
+          type: boolean
+        bigInteger:
+          type: boolean
+        textual:
+          type: boolean
+        boolean:
+          type: boolean
+        'null':
+          type: boolean
+        binary:
+          type: boolean
+      x-stoplight:
+        id: 9a3a1hf7uvxgr
+    JsonNodeType:
+      type: string
+      enum:
+        - ARRAY
+        - BINARY
+        - BOOLEAN
+        - MISSING
+        - 'NULL'
+        - NUMBER
+        - OBJECT
+        - POJO
+        - STRING
+      x-stoplight:
+        id: eotun0lb8wpm3
+    AdsResponseString:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        body:
+          type: string
+        error:
+          $ref: '#/components/schemas/ErrorDetails'
+      x-stoplight:
+        id: 1mauz2b7tohr2
+    AdsResponseWpResponseDTO:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        body:
+          $ref: '#/components/schemas/WpResponseDTO'
+        error:
+          $ref: '#/components/schemas/ErrorDetails'
+      x-stoplight:
+        id: 6orm836odhon9
+    WpResponseChild:
+      type: object
+      properties:
+        configId:
+          type: string
+        configurator:
+          type: string
+      x-stoplight:
+        id: ybjepgk78m44g
+    WpResponseDTO:
+      type: object
+      properties:
+        adsId:
+          type: string
+        configIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/WpResponseChild'
+      x-stoplight:
+        id: w7msgi07vnjak
+    StandardError:
+      type: object
+      required:
+        - code
+        - userMessage
+        - developerMessage
+        - moreInfo
+      properties:
+        code:
+          type: string
+          description: Error code matching HTTP status class e.g. BAD_REQUEST
+        userMessage:
+          type: string
+          description: End-user friendly message tied to HTTP status
+        developerMessage:
+          type: string
+          description: Specific cause or debug detail for developers
+        moreInfo:
+          type: string
+          description: URL or extra details
+      x-stoplight:
+        id: 4a2azh8iskhcp
+  responses:
+    Error400:
+      description: "{\r\n    \"status\": 400,\r\n    \"body\": null,\r\n    \"error\": {\r\n        \"message\": \"string\",\r\n        \"code\": \"string\"\r\n    }\r\n}"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardError'
+          examples:
+            Example 1:
+              value:
+                code: '0'
+                userMessage: string
+                developerMessage: string
+                moreInfo: string
+    Error401:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardError'
+    Error403:
+      description: "{\r\n    \"message\": \"string\"\r\n}"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardError'
+          examples: {}
+    Error404:
+      description: "{\r\n    \"status\": 404,\r\n    \"body\": null,\r\n    \"error\": {\r\n        \"message\": \"string\",\r\n        \"code\": \"string\"\r\n    }\r\n}"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardError'
+          examples: {}
+    Error429:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardError'
+    Error500:
+      description: "{\r\n    \"status\": 500,\r\n    \"body\": null,\r\n    \"error\": {\r\n        \"message\": \"string\",\r\n        \"code\": \"string\"\r\n    }\r\n}\r\n "
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardError'
+          examples: {}
+  requestBodies: {}
+  headers: {}
+  examples: {}
+  links: {}
+  callbacks: {}
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
