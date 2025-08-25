@@ -71,6 +71,62 @@ paths:
                   value:
                     value:
                       message: document uploaded successfully
+        '400':
+          description: "{\r\n  \"code\": 400,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 400
+                    userMessage: Bad request
+                    developerMessage: ADS id must conatin 30 digits
+                    moreInfo: ''
+        '401':
+          description: "{\r\n  \"code\": 401,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 401
+                    userMessage: Authentication failed
+                    developerMessage: 'Authentication failed: missing or malformed API Key'
+                    moreInfo: ''
+        '404':
+          description: "{\r\n  \"code\": 404,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 404
+                    userMessage: AdsId 000010000000246019746502279168 not found
+                    developerMessage: No BOM data found for the given AdsId 000010000000246019746502279168
+                    moreInfo: ''
+        '500':
+          description: "{\r\n  \"code\": 500,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 500
+                    userMessage: Internal server error
+                    developerMessage: An unexpected error occurred while processing the request
+                    moreInfo: ' '
       x-stoplight:
         id: pqb5oet6jc37l
     parameters: []
@@ -100,6 +156,62 @@ paths:
               examples:
                 Example 1:
                   value: {}
+        '400':
+          description: "{\r\n  \"code\": 400,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 400
+                    userMessage: Bad request
+                    developerMessage: ADS id must conatin 30 digits
+                    moreInfo: ''
+        '401':
+          description: "{\r\n  \"code\": 401,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 401
+                    userMessage: Authentication failed
+                    developerMessage: 'Authentication failed: missing or malformed API Key'
+                    moreInfo: ''
+        '404':
+          description: "{\r\n  \"code\": 404,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 404
+                    userMessage: AdsId 000010000000246019746502279168 not found
+                    developerMessage: No BOM data found for the given AdsId 000010000000246019746502279168
+                    moreInfo: ''
+        '500':
+          description: "{\r\n  \"code\": 500,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 500
+                    userMessage: Internal server error
+                    developerMessage: An unexpected error occurred while processing the request
+                    moreInfo: ' '
       x-stoplight:
         id: cvod4ugfycb02
     parameters: []
@@ -135,7 +247,7 @@ paths:
                         productCode: MTZ108_H124PMWNN
                         hive2url: 'ads/000010000000245145581322764288/doc/hive2.xml '
         '400':
-          description: "{\r\n  \"code\": 10,\r\n  \"message\": \"string\"\r\n}"
+          description: "{\r\n  \"code\": 400,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
           content:
             application/json:
               schema:
@@ -144,8 +256,52 @@ paths:
               examples:
                 Example:
                   value:
-                    code: 10
-                    message: string
+                    code: 400
+                    userMessage: Bad request
+                    developerMessage: ADS id must conatin 30 digits
+                    moreInfo: ''
+        '401':
+          description: "{\r\n  \"code\": 401,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 401
+                    userMessage: Authentication failed
+                    developerMessage: 'Authentication failed: missing or malformed API Key'
+                    moreInfo: ''
+        '404':
+          description: "{\r\n  \"code\": 404,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 404
+                    userMessage: AdsId 000010000000246019746502279168 not found
+                    developerMessage: No BOM data found for the given AdsId 000010000000246019746502279168
+                    moreInfo: ''
+        '500':
+          description: "{\r\n  \"code\": 500,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 500
+                    userMessage: Internal server error
+                    developerMessage: An unexpected error occurred while processing the request
+                    moreInfo: ' '
       x-stoplight:
         id: qu4sgzu1rt6gu
     parameters: []
@@ -203,7 +359,7 @@ paths:
                             - productId: LV847281
                               quantity: 1
         '400':
-          description: "{\r\n  \"code\": 10,\r\n  \"message\": \"string\"\r\n}"
+          description: "{\r\n  \"code\": 400,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
           content:
             application/json:
               schema:
@@ -212,8 +368,52 @@ paths:
               examples:
                 Example 1:
                   value:
-                    code: 10
-                    message: string
+                    code: 400
+                    userMessage: Bad request
+                    developerMessage: ADS id must conatin 30 digits
+                    moreInfo: ''
+        '401':
+          description: "{\r\n  \"code\": 401,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 401
+                    userMessage: Authentication failed
+                    developerMessage: 'Authentication failed: missing or malformed API Key'
+                    moreInfo: ''
+        '404':
+          description: "{\r\n  \"code\": 404,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 404
+                    userMessage: AdsId 000010000000246019746502279168 not found
+                    developerMessage: No BOM data found for the given AdsId 000010000000246019746502279168
+                    moreInfo: ''
+        '500':
+          description: "{\r\n  \"code\": 500,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 500
+                    userMessage: Internal server error
+                    developerMessage: An unexpected error occurred while processing the request
+                    moreInfo: ' '
       x-stoplight:
         id: 1y4baubc03dan
     parameters: []
@@ -255,7 +455,7 @@ paths:
                     reloadConfiguration: true
                     reloadConfigurationId: '000010000000241524180091143168'
         '400':
-          description: "{\r\n  \"code\": 10,\r\n  \"message\": \"string\"\r\n}"
+          description: "{\r\n  \"code\": 400,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
           content:
             application/json:
               schema:
@@ -264,8 +464,52 @@ paths:
               examples:
                 Example 1:
                   value:
-                    code: 10
-                    message: string
+                    code: 400
+                    userMessage: Bad request
+                    developerMessage: ADS id must conatin 30 digits
+                    moreInfo: ''
+        '401':
+          description: "{\r\n  \"code\": 401,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 401
+                    userMessage: Authentication failed
+                    developerMessage: 'Authentication failed: missing or malformed API Key'
+                    moreInfo: ''
+        '404':
+          description: "{\r\n  \"code\": 404,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 404
+                    userMessage: AdsId 000010000000246019746502279168 not found
+                    developerMessage: No BOM data found for the given AdsId 000010000000246019746502279168
+                    moreInfo: ''
+        '500':
+          description: "{\r\n  \"code\": 500,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 500
+                    userMessage: Internal server error
+                    developerMessage: An unexpected error occurred while processing the request
+                    moreInfo: ' '
       x-stoplight:
         id: 6xmqowkkem3jz
     parameters: []
@@ -294,6 +538,62 @@ paths:
                   value:
                     status: 200
                     body: '000010000000245469048077287424'
+        '400':
+          description: "{\r\n  \"code\": 400,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 400
+                    userMessage: Bad request
+                    developerMessage: app-id is required
+                    moreInfo: ''
+        '401':
+          description: "{\r\n  \"code\": 401,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 401
+                    userMessage: Authentication failed
+                    developerMessage: 'Authentication failed: missing or malformed API Key'
+                    moreInfo: ''
+        '404':
+          description: "{\r\n  \"code\": 404,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 404
+                    userMessage: configurator not subscribed
+                    developerMessage: Configurator is not subscribed in ADS platform
+                    moreInfo: ''
+        '500':
+          description: "{\r\n  \"code\": 500,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 500
+                    userMessage: Internal server error
+                    developerMessage: An unexpected error occurred while processing the request
+                    moreInfo: ' '
       x-stoplight:
         id: r3373cfv6rd93
       requestBody:
@@ -653,7 +953,61 @@ paths:
                       message: string
                       code: string
         '400':
-          description: "{\r\n    \"status\": 400,\r\n    \"body\": null,\r\n    \"error\": {\r\n        \"message\": \"string\",\r\n        \"code\": \"string\"\r\n    }\r\n}"
+          description: "{\r\n  \"code\": 400,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 400
+                    userMessage: Bad request
+                    developerMessage: app-id is required
+                    moreInfo: ''
+        '401':
+          description: "{\r\n  \"code\": 401,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 401
+                    userMessage: Authentication failed
+                    developerMessage: 'Authentication failed: missing or malformed API Key'
+                    moreInfo: ''
+        '404':
+          description: "{\r\n  \"code\": 404,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 404
+                    userMessage: configurator not subscribed
+                    developerMessage: Configurator is not subscribed in ADS platform
+                    moreInfo: ''
+        '500':
+          description: "{\r\n  \"code\": 500,\r\n  \"userMessage\": \"string\",\r\n  \"developerMessage\": \"string\",\r\n  \"moreInfo\": \"string\"\r\n}"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Example 1:
+                  value:
+                    code: 500
+                    userMessage: Internal server error
+                    developerMessage: An unexpected error occurred while processing the request
+                    moreInfo: ' '
       x-stoplight:
         id: 77nftjbwqyz1l
     parameters:
