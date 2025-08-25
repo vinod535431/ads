@@ -3,7 +3,7 @@ x-stoplight:
   id: ghswp4ggeiev6
 info:
   title: Authoritative Data
-  version: 1.0.0
+  version: '1.0'
   description: "ADS is a data hub that consolidates configuration details from multiple configurators into a unified format for FO/BO applications, anchored by a unique ConfigID.\r\nIts architecture uses a common database/services layer compatible with legacy configurators, and APIs to generate ConfigIDs, fetch detailed configuration/BOM L1/Hive2, \r\nand store/retrieve configuration documents and assembly data (e.g., Project Builder), as well as SO/Quote information.\r\nIt supports integration with both web and desktop configurator applications."
   contact:
     name: Vinod Bathula
